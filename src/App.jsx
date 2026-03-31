@@ -61,16 +61,17 @@ function MagneticButton({ children, className, href, strength = 0.35 }) {
   }
   const onLeave = () => { x.set(0); y.set(0) }
 
+  const Tag = href ? motion.a : motion.button
   return (
-    <motion.a
-      ref={ref} href={href}
+    <Tag
+      ref={ref} href={href || undefined} type={href ? undefined : 'submit'}
       style={{ x: sx, y: sy }}
       onMouseMove={onMove} onMouseLeave={onLeave}
       whileTap={{ scale: 0.95 }}
       className={className}
     >
       {children}
-    </motion.a>
+    </Tag>
   )
 }
 
