@@ -1017,7 +1017,7 @@ function Contact() {
   )
 }
 
-function Footer() {
+function Footer({ onLegal }) {
   const cols = {
     Services: ['Site de commande en ligne', 'Site vitrine', 'SEO local', 'Design sur mesure'],
     Entreprise: ['À propos', 'Réalisations', 'Tarifs', 'Contact'],
@@ -1034,7 +1034,7 @@ function Footer() {
               <span className="font-bold text-[15px] tracking-tight text-white">Nova<span className="text-violet-500">.IO</span></span>
             </div>
             <p className="text-[13px] text-gray-600 leading-relaxed max-w-xs">
-              Sites web professionnels pour les restaurants et artisans d'Île-de-France. Livraison en 2 semaines.
+              Sites web professionnels pour les restaurants et artisans d&apos;Île-de-France. Livraison en 2 semaines.
             </p>
           </div>
           {Object.entries(cols).map(([title, items]) => (
@@ -1053,9 +1053,8 @@ function Footer() {
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-[12px] text-gray-700">© 2026 Nova.IO — Tous droits réservés</p>
           <div className="flex gap-5">
-            {['Mentions légales', 'Confidentialité'].map(l => (
-              <a key={l} href="#" className="text-[12px] text-gray-700 hover:text-gray-400 transition-colors">{l}</a>
-            ))}
+            <button onClick={() => onLegal('mentions')} className="text-[12px] text-gray-700 hover:text-gray-400 transition-colors">Mentions légales</button>
+            <button onClick={() => onLegal('confidentialite')} className="text-[12px] text-gray-700 hover:text-gray-400 transition-colors">Confidentialité</button>
           </div>
         </div>
       </div>
@@ -1063,10 +1062,112 @@ function Footer() {
   )
 }
 
+// ─── Legal modal ─────────────────────────────────────────────────────────────
+
+const LEGAL_CONTENT = {
+  mentions: {
+    title: 'Mentions légales',
+    sections: [
+      {
+        heading: 'Éditeur du site',
+        body: `Le site Nova.IO est édité par :\n\nAlexandre D., micro-entrepreneur en cours d'immatriculation\nSiège social : Île-de-France\nEmail : nova.iocontact@gmail.com\n\nDirecteur de la publication : Alexandre D.`,
+      },
+      {
+        heading: 'Hébergement',
+        body: `Le site est hébergé par :\n\nVercel Inc.\n340 Pine Street, Suite 1601\nSan Francisco, CA 94104 — États-Unis\nSite : vercel.com`,
+      },
+      {
+        heading: 'Propriété intellectuelle',
+        body: `L'ensemble du contenu de ce site (textes, visuels, logo, structure) est la propriété exclusive de Nova.IO. Toute reproduction, même partielle, est interdite sans autorisation préalable écrite.`,
+      },
+      {
+        heading: 'Responsabilité',
+        body: `Nova.IO s'efforce de maintenir les informations de ce site à jour et exactes. Nova.IO ne saurait être tenu responsable des erreurs, omissions ou résultats obtenus suite à une mauvaise utilisation des informations publiées.`,
+      },
+    ],
+  },
+  confidentialite: {
+    title: 'Politique de confidentialité',
+    sections: [
+      {
+        heading: 'Données collectées',
+        body: `Lors de l'utilisation du formulaire de contact, les données suivantes sont collectées :\n- Prénom\n- Nom de l'établissement\n- Adresse email\n- Numéro de téléphone (facultatif)\n- Message\n\nCes données sont utilisées exclusivement pour répondre à votre demande.`,
+      },
+      {
+        heading: 'Conservation des données',
+        body: `Les données transmises via le formulaire de contact sont conservées le temps nécessaire au traitement de votre demande, et au maximum 3 ans conformément aux obligations légales.`,
+      },
+      {
+        heading: 'Partage des données',
+        body: `Vos données ne sont ni vendues, ni louées, ni transmises à des tiers. Elles transitent via le service EmailJS (emailjs.com) pour l'acheminement du message.`,
+      },
+      {
+        heading: 'Vos droits (RGPD)',
+        body: `Conformément au Règlement Général sur la Protection des Données (RGPD), vous disposez d'un droit d'accès, de rectification, d'effacement et d'opposition sur vos données. Pour exercer ces droits : nova.iocontact@gmail.com`,
+      },
+      {
+        heading: 'Cookies',
+        body: `Ce site n'utilise aucun cookie de tracking ou de publicité. Aucune donnée de navigation n'est collectée à des fins analytiques ou commerciales.`,
+      },
+    ],
+  },
+}
+
+function LegalModal({ type, onClose }) {
+  const content = LEGAL_CONTENT[type]
+  if (!content) return null
+
+  return (
+    <AnimatePresence>
+      <motion.div
+        key="overlay"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm px-4"
+        onClick={onClose}
+      >
+        <motion.div
+          initial={{ opacity: 0, y: 24, scale: 0.97 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: 12 }}
+          transition={{ duration: 0.25 }}
+          className="relative bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[80vh] overflow-y-auto p-8"
+          onClick={e => e.stopPropagation()}
+        >
+          <button
+            onClick={onClose}
+            className="absolute top-5 right-5 text-gray-400 hover:text-gray-700 transition-colors"
+            aria-label="Fermer"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+
+          <h2 className="text-xl font-black text-gray-900 mb-7">{content.title}</h2>
+
+          <div className="flex flex-col gap-6">
+            {content.sections.map(s => (
+              <div key={s.heading}>
+                <h3 className="text-[13px] font-bold uppercase tracking-wider text-violet-600 mb-2">{s.heading}</h3>
+                <p className="text-[13px] text-gray-600 leading-relaxed whitespace-pre-line">{s.body}</p>
+              </div>
+            ))}
+          </div>
+
+          <p className="mt-8 text-[11px] text-gray-400">Dernière mise à jour : mars 2026</p>
+        </motion.div>
+      </motion.div>
+    </AnimatePresence>
+  )
+}
+
 // ─── App ──────────────────────────────────────────────────────────────────────
 
 export default function App() {
   useLenis()
+  const [legalModal, setLegalModal] = useState(null)
 
   return (
     <div className="min-h-screen font-sans antialiased">
@@ -1084,7 +1185,8 @@ export default function App() {
         <FinalCTA />
         <Contact />
       </main>
-      <Footer />
+      <Footer onLegal={setLegalModal} />
+      {legalModal && <LegalModal type={legalModal} onClose={() => setLegalModal(null)} />}
     </div>
   )
 }
