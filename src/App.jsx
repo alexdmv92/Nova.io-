@@ -1054,6 +1054,7 @@ function Footer({ onLegal }) {
           <p className="text-[12px] text-gray-700">© 2026 Nova.IO — Tous droits réservés</p>
           <div className="flex gap-5">
             <button onClick={() => onLegal('mentions')} className="text-[12px] text-gray-700 hover:text-gray-400 transition-colors">Mentions légales</button>
+            <button onClick={() => onLegal('cgv')} className="text-[12px] text-gray-700 hover:text-gray-400 transition-colors">CGV</button>
             <button onClick={() => onLegal('confidentialite')} className="text-[12px] text-gray-700 hover:text-gray-400 transition-colors">Confidentialité</button>
           </div>
         </div>
@@ -1083,6 +1084,51 @@ const LEGAL_CONTENT = {
       {
         heading: 'Responsabilité',
         body: `Nova.IO s'efforce de maintenir les informations de ce site à jour et exactes. Nova.IO ne saurait être tenu responsable des erreurs, omissions ou résultats obtenus suite à une mauvaise utilisation des informations publiées.`,
+      },
+    ],
+  },
+  cgv: {
+    title: 'Conditions Générales de Vente',
+    sections: [
+      {
+        heading: 'Article 1 — Objet',
+        body: `Les présentes Conditions Générales de Vente (CGV) régissent les relations contractuelles entre Nova.IO (Alexandre D., micro-entrepreneur, Île-de-France, nova.iocontact@gmail.com) et tout client professionnel passant commande d'une prestation de création de site web.\n\nToute commande implique l'acceptation pleine et entière des présentes CGV.`,
+      },
+      {
+        heading: 'Article 2 — Prestations proposées',
+        body: `Nova.IO propose deux offres principales :\n\n• Nova Menu (700 € TTC) : site web de commande en ligne pour restaurants, incluant menu digital, design sur mesure, responsive mobile & desktop, référencement local (SEO), hébergement et nom de domaine la première année, 2 tours de corrections.\n\n• Nova Vitrine (450 € TTC) : site vitrine 5 pages pour artisans, commerçants et TPE, incluant design sur mesure, formulaire de contact, responsive mobile & desktop, référencement local (SEO), hébergement et nom de domaine la première année, 2 tours de corrections.\n\nDes prestations complémentaires peuvent être devisées sur demande (maintenance mensuelle, refonte contenu, SEO avancé).`,
+      },
+      {
+        heading: 'Article 3 — Tarifs et modalités de paiement',
+        body: `Les tarifs sont indiqués en euros TTC. Nova.IO, en tant que micro-entrepreneur non assujetti à la TVA, applique la mention : "TVA non applicable — article 293 B du CGI".\n\nLe règlement s'effectue en deux versements :\n• 50 % à la signature de la lettre de mission (acompte)\n• 50 % à la livraison du site\n\nLes moyens de paiement acceptés sont : virement bancaire, PayPal, Lydia/Sumeria. L'acompte est dû avant tout démarrage des travaux.`,
+      },
+      {
+        heading: 'Article 4 — Délais de livraison',
+        body: `Le délai de livraison standard est de 14 jours calendaires à compter de la réception de l'acompte et des éléments nécessaires à la réalisation (textes, photos, logo, accès).\n\nCe délai est donné à titre indicatif. Tout retard de transmission des éléments par le client entraîne automatiquement un report équivalent du délai de livraison. Nova.IO ne saurait être tenu responsable des retards causés par le client.`,
+      },
+      {
+        heading: 'Article 5 — Obligations du client',
+        body: `Le client s'engage à :\n• Fournir en temps utile tous les éléments nécessaires à la réalisation (textes, visuels, logo, accès hébergeur/domaine si existant)\n• Désigner un interlocuteur unique pour les échanges et validations\n• Formuler ses retours de manière précise et complète dans le délai de 7 jours suivant la livraison de chaque version\n\nAu-delà de 2 tours de corrections inclus, toute modification supplémentaire fera l'objet d'un devis complémentaire.`,
+      },
+      {
+        heading: 'Article 6 — Propriété intellectuelle',
+        body: `Nova.IO cède au client, à la livraison complète et après règlement intégral, les droits d'utilisation sur le site livré (mise en ligne, modification ultérieure, reproduction).\n\nNova.IO se réserve le droit de mentionner la réalisation dans son book de références (nom du client, capture d'écran, URL), sauf refus explicite du client formulé par écrit.`,
+      },
+      {
+        heading: 'Article 7 — Droit de rétractation',
+        body: `Conformément à l'article L. 221-28 du Code de la consommation, le droit de rétractation ne s'applique pas aux prestations de services pleinement exécutées avant la fin du délai de rétractation, ni aux contenus numériques personnalisés.\n\nLes prestations Nova.IO étant des créations sur mesure débutant dès versement de l'acompte, aucun remboursement de l'acompte ne pourra être réclamé une fois les travaux engagés.`,
+      },
+      {
+        heading: 'Article 8 — Responsabilité',
+        body: `Nova.IO s'engage à apporter tout le soin et la diligence nécessaires à la bonne réalisation des prestations commandées. Nova.IO n'est tenu qu'à une obligation de moyens.\n\nNova.IO ne saurait être tenu responsable des préjudices indirects (perte de chiffre d'affaires, perte de clientèle) liés à l'utilisation ou à l'indisponibilité du site livré. La responsabilité de Nova.IO est en tout état de cause limitée au montant de la prestation facturée.`,
+      },
+      {
+        heading: 'Article 9 — Résiliation',
+        body: `En cas de manquement grave de l'une ou l'autre des parties à ses obligations, le contrat pourra être résilié par lettre recommandée avec accusé de réception, après mise en demeure restée sans effet pendant 15 jours.\n\nEn cas de résiliation à l'initiative du client après démarrage des travaux, l'acompte versé reste acquis à Nova.IO en compensation du travail réalisé.`,
+      },
+      {
+        heading: 'Article 10 — Droit applicable et litiges',
+        body: `Les présentes CGV sont soumises au droit français. En cas de litige, une solution amiable sera recherchée en priorité. À défaut d'accord, le litige sera porté devant les tribunaux compétents du ressort d'Île-de-France.\n\nMise à jour : mars 2026.`,
       },
     ],
   },
