@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
+import emailjs from '@emailjs/browser'
 import { motion, useInView, useScroll, useTransform, AnimatePresence, useSpring, useMotionValue } from 'framer-motion'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -910,6 +911,27 @@ function FinalCTA() {
 
 function Contact() {
   const [sent, setSent] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const formRef = useRef(null)
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setLoading(true)
+    try {
+      await emailjs.sendForm(
+        'service_p9cnp08',
+        'template_xcolvf2',
+        formRef.current,
+        'uCuF6ko_sS7czsOPQ'
+      )
+      setSent(true)
+    } catch {
+      alert('Une erreur est survenue. Réessayez ou contactez-nous directement.')
+    } finally {
+      setLoading(false)
+    }
+  }
+
   return (
     <section id="contact" className="bg-gray-50 py-28 px-6">
       <div className="max-w-xl mx-auto">
@@ -935,29 +957,35 @@ function Contact() {
                 <p className="text-[13px] text-gray-500">Nous vous répondons sous 24h ouvrées.</p>
               </motion.div>
             ) : (
-              <motion.form key="form" initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-                onSubmit={e => { e.preventDefault(); setSent(true) }}
+              <motion.form ref={formRef} key="form" initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+                onSubmit={handleSubmit}
                 className="bg-white rounded-2xl border border-gray-200 p-8 flex flex-col gap-5 shadow-sm"
               >
                 <div className="grid sm:grid-cols-2 gap-5">
-                  {[['Prénom', 'text', 'Jean', true], ['Établissement', 'text', 'Mon Restaurant', true]].map(([l, t, p, r]) => (
-                    <div key={l} className="flex flex-col gap-1.5">
-                      <label className="text-[11px] font-semibold uppercase tracking-wider text-gray-500">{l}</label>
-                      <input required={r} type={t} placeholder={p}
-                        className="border border-gray-200 rounded-xl px-4 py-3 text-[13px] focus:outline-none focus:ring-2 focus:ring-violet-500 transition-all" />
-                    </div>
-                  ))}
-                </div>
-                {[['Email', 'email', 'jean@monresto.fr', true], ['Téléphone', 'tel', '06 00 00 00 00', false]].map(([l, t, p, r]) => (
-                  <div key={l} className="flex flex-col gap-1.5">
-                    <label className="text-[11px] font-semibold uppercase tracking-wider text-gray-500">{l}</label>
-                    <input required={r} type={t} placeholder={p}
+                  <div className="flex flex-col gap-1.5">
+                    <label className="text-[11px] font-semibold uppercase tracking-wider text-gray-500">Prénom</label>
+                    <input name="from_name" required type="text" placeholder="Jean"
                       className="border border-gray-200 rounded-xl px-4 py-3 text-[13px] focus:outline-none focus:ring-2 focus:ring-violet-500 transition-all" />
                   </div>
-                ))}
+                  <div className="flex flex-col gap-1.5">
+                    <label className="text-[11px] font-semibold uppercase tracking-wider text-gray-500">Établissement</label>
+                    <input name="establishment" required type="text" placeholder="Mon Restaurant"
+                      className="border border-gray-200 rounded-xl px-4 py-3 text-[13px] focus:outline-none focus:ring-2 focus:ring-violet-500 transition-all" />
+                  </div>
+                </div>
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-[11px] font-semibold uppercase tracking-wider text-gray-500">Email</label>
+                  <input name="from_email" required type="email" placeholder="jean@monresto.fr"
+                    className="border border-gray-200 rounded-xl px-4 py-3 text-[13px] focus:outline-none focus:ring-2 focus:ring-violet-500 transition-all" />
+                </div>
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-[11px] font-semibold uppercase tracking-wider text-gray-500">Téléphone</label>
+                  <input name="phone" type="tel" placeholder="06 00 00 00 00"
+                    className="border border-gray-200 rounded-xl px-4 py-3 text-[13px] focus:outline-none focus:ring-2 focus:ring-violet-500 transition-all" />
+                </div>
                 <div className="flex flex-col gap-1.5">
                   <label className="text-[11px] font-semibold uppercase tracking-wider text-gray-500">Offre</label>
-                  <select className="border border-gray-200 rounded-xl px-4 py-3 text-[13px] text-gray-700 focus:outline-none focus:ring-2 focus:ring-violet-500 bg-white">
+                  <select name="project" className="border border-gray-200 rounded-xl px-4 py-3 text-[13px] text-gray-700 focus:outline-none focus:ring-2 focus:ring-violet-500 bg-white">
                     <option>Nova Menu — Restaurant (700€)</option>
                     <option>Nova Vitrine — Artisan / TPE (450€)</option>
                     <option>Je ne sais pas encore</option>
@@ -965,17 +993,19 @@ function Contact() {
                 </div>
                 <div className="flex flex-col gap-1.5">
                   <label className="text-[11px] font-semibold uppercase tracking-wider text-gray-500">Message</label>
-                  <textarea rows={3} placeholder="Décrivez votre projet..."
+                  <textarea name="message" rows={3} placeholder="Décrivez votre projet..."
                     className="border border-gray-200 rounded-xl px-4 py-3 text-[13px] focus:outline-none focus:ring-2 focus:ring-violet-500 resize-none transition-all" />
                 </div>
                 <MagneticButton href={null}
-                  className="bg-gray-900 text-white font-bold text-[14px] py-3.5 rounded-xl hover:bg-violet-700 transition-colors mt-1 flex items-center justify-center gap-2 cursor-pointer"
-                  onClick={() => setSent(true)}
+                  className="bg-gray-900 text-white font-bold text-[14px] py-3.5 rounded-xl hover:bg-violet-700 transition-colors mt-1 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60"
+                  onClick={null}
                 >
-                  Envoyer ma demande
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
+                  {loading ? 'Envoi en cours…' : 'Envoyer ma demande'}
+                  {!loading && (
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  )}
                 </MagneticButton>
               </motion.form>
             )}
