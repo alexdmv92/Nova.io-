@@ -301,17 +301,14 @@ function Navbar() {
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${scrolled ? 'bg-white/96 backdrop-blur-md shadow-[0_1px_0_0_rgba(0,0,0,0.06)]' : 'bg-transparent'}`}
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        <a href="#" className="flex items-center gap-2">
-          <motion.div
-            whileHover={{ scale: 1.1, rotate: 6 }}
-            transition={{ type: 'spring', stiffness: 500, damping: 20 }}
-            className="h-8 w-8 rounded-xl bg-gradient-to-br from-violet-500 to-violet-800 flex items-center justify-center shadow-lg shadow-violet-500/25"
-          >
-            <span className="text-[11px] font-black text-white">N</span>
-          </motion.div>
-          <span className={`font-bold text-[15px] tracking-tight transition-colors duration-300 ${scrolled ? 'text-gray-900' : 'text-white'}`}>
-            Nova<span className="text-violet-500">.IO</span>
-          </span>
+        <a href="#" className="flex items-center">
+          <motion.img
+            src="/logo.png"
+            alt="Nova.io"
+            whileHover={{ scale: 1.05 }}
+            transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+            className="h-9 w-auto rounded-lg object-contain"
+          />
         </a>
 
         <nav className="hidden md:flex items-center gap-1">
