@@ -1153,7 +1153,7 @@ const LEGAL_CONTENT = {
       },
       {
         heading: 'Cookies',
-        body: `Ce site n'utilise aucun cookie de tracking ou de publicité. Aucune donnée de navigation n'est collectée à des fins analytiques ou commerciales.`,
+        body: `Ce site utilise Google Analytics 4 (Google LLC) afin de mesurer l'audience et améliorer nos services. À ce titre, des cookies de mesure d'audience sont déposés sur votre terminal lors de votre visite. Les données collectées (pages visitées, durée de session, pays, type d'appareil) sont anonymisées et transmises à Google. Aucun cookie publicitaire n'est utilisé. Conformément au RGPD, vous pouvez refuser ces cookies en installant le module de désactivation Google Analytics disponible sur : tools.google.com/dlpage/gaoptout. Pour en savoir plus sur la politique de confidentialité de Google : policies.google.com/privacy.`,
       },
     ],
   },
