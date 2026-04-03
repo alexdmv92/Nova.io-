@@ -632,7 +632,7 @@ function Features() {
   const lastSwipe = useRef(0)
 
   useEffect(() => {
-    const t = setInterval(() => setActive(i => (i + 1) % FEATURES.length), 4000)
+    const t = setInterval(() => setActive(i => (i + 1) % FEATURES.length), 7000)
     return () => clearInterval(t)
   }, [])
 
