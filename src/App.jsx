@@ -628,50 +628,68 @@ function Results() {
 }
 
 function Features() {
+  const [active, setActive] = useState(0)
+
+  useEffect(() => {
+    const t = setInterval(() => setActive(i => (i + 1) % FEATURES.length), 4000)
+    return () => clearInterval(t)
+  }, [])
+
+  const f = FEATURES[active]
+
   return (
-    <section id="services" className="bg-gray-50 py-28 px-6">
-      <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-20">
+    <section id="services" className="bg-gray-50 py-20 px-6">
+      <div className="max-w-4xl mx-auto">
+        <div className="text-center mb-12">
           <Reveal><p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-violet-600 mb-4">Services</p></Reveal>
           <SplitReveal text="Tout pour exister en ligne. Rien de superflu."
-            className="text-[38px] md:text-[48px] font-black text-gray-900 tracking-[-0.02em] leading-[1.1] mb-4" />
+            className="text-[32px] md:text-[42px] font-black text-gray-900 tracking-[-0.02em] leading-[1.1] mb-4" />
         </div>
 
-        <div className="flex flex-col gap-5">
-          {FEATURES.map((f, i) => (
-            <Reveal key={i} delay={0.05}>
-              <motion.div
-                whileHover={{ y: -4 }}
-                transition={{ type: 'spring', stiffness: 250, damping: 22 }}
-                className={`rounded-3xl p-10 md:p-14 flex flex-col md:flex-row gap-10 md:gap-20 items-start ${f.dark ? 'bg-gray-950' : 'bg-white border border-gray-100'}`}
-              >
-                <div className="flex-1">
-                  <motion.span
-                    initial={{ opacity: 0, x: -12 }} whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.1 }}
-                    className={`inline-block text-[10px] font-bold tracking-[0.14em] uppercase px-3 py-1 rounded-full mb-5 ${f.dark ? 'bg-white/10 text-violet-400' : 'bg-violet-50 text-violet-700'}`}
-                  >
-                    {f.category}
-                  </motion.span>
-                  <h3 className={`text-[26px] md:text-[32px] font-black tracking-tight leading-tight mb-4 ${f.dark ? 'text-white' : 'text-gray-900'}`}>
-                    {f.title}
-                  </h3>
-                  <p className={`text-[15px] leading-[1.7] ${f.dark ? 'text-gray-400' : 'text-gray-500'}`}>{f.description}</p>
+        {/* Tabs */}
+        <div className="flex justify-center gap-2 mb-8 flex-wrap">
+          {FEATURES.map((item, i) => (
+            <button key={i} onClick={() => setActive(i)}
+              className={`text-[12px] font-semibold px-5 py-2.5 rounded-full transition-all duration-300 ${active === i ? 'bg-gray-900 text-white shadow-lg' : 'bg-white border border-gray-200 text-gray-500 hover:border-gray-400'}`}>
+              {item.category}
+            </button>
+          ))}
+        </div>
+
+        {/* Card */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={active}
+            initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.35, ease: 'easeOut' }}
+            className={`rounded-3xl p-8 md:p-12 flex flex-col md:flex-row gap-8 md:gap-16 items-start ${f.dark ? 'bg-gray-950' : 'bg-white border border-gray-100'}`}
+          >
+            <div className="flex-1">
+              <span className={`inline-block text-[10px] font-bold tracking-[0.14em] uppercase px-3 py-1 rounded-full mb-5 ${f.dark ? 'bg-white/10 text-violet-400' : 'bg-violet-50 text-violet-700'}`}>
+                {f.category}
+              </span>
+              <h3 className={`text-[24px] md:text-[30px] font-black tracking-tight leading-tight mb-4 ${f.dark ? 'text-white' : 'text-gray-900'}`}>
+                {f.title}
+              </h3>
+              <p className={`text-[14px] leading-[1.7] ${f.dark ? 'text-gray-400' : 'text-gray-500'}`}>{f.description}</p>
+            </div>
+            <div className="md:w-52 shrink-0 flex flex-col gap-3">
+              {f.stats.map((s, j) => (
+                <div key={j} className={`rounded-2xl px-5 py-4 ${f.dark ? 'bg-white/[0.06] border border-white/[0.08]' : 'bg-gray-50 border border-gray-100'}`}>
+                  <div className={`text-[28px] font-black leading-none ${f.dark ? 'text-white' : 'text-gray-900'}`}>{s.v}</div>
+                  <div className={`text-[11px] mt-1 ${f.dark ? 'text-gray-500' : 'text-gray-400'}`}>{s.l}</div>
                 </div>
-                <div className="md:w-60 shrink-0 flex flex-col gap-4">
-                  {f.stats.map((s, j) => (
-                    <motion.div key={j}
-                      initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }} transition={{ delay: 0.15 + j * 0.1 }}
-                      className={`rounded-2xl px-6 py-5 ${f.dark ? 'bg-white/[0.06] border border-white/[0.08]' : 'bg-gray-50 border border-gray-100'}`}
-                    >
-                      <div className={`text-[32px] font-black leading-none ${f.dark ? 'text-white' : 'text-gray-900'}`}>{s.v}</div>
-                      <div className={`text-[12px] mt-1.5 ${f.dark ? 'text-gray-500' : 'text-gray-400'}`}>{s.l}</div>
-                    </motion.div>
-                  ))}
-                </div>
-              </motion.div>
-            </Reveal>
+              ))}
+            </div>
+          </motion.div>
+        </AnimatePresence>
+
+        {/* Progress dots */}
+        <div className="flex justify-center gap-2 mt-6">
+          {FEATURES.map((_, i) => (
+            <button key={i} onClick={() => setActive(i)}
+              className={`rounded-full transition-all duration-300 ${i === active ? 'w-5 h-2 bg-violet-600' : 'w-2 h-2 bg-gray-300'}`}
+            />
           ))}
         </div>
       </div>
