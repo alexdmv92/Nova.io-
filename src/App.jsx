@@ -629,11 +629,21 @@ function Results() {
 
 function Features() {
   const [active, setActive] = useState(0)
+  const lastSwipe = useRef(0)
 
   useEffect(() => {
     const t = setInterval(() => setActive(i => (i + 1) % FEATURES.length), 4000)
     return () => clearInterval(t)
   }, [])
+
+  const handleWheel = (e) => {
+    if (Math.abs(e.deltaX) < 20) return
+    const now = Date.now()
+    if (now - lastSwipe.current < 600) return
+    lastSwipe.current = now
+    if (e.deltaX > 0) setActive(i => (i + 1) % FEATURES.length)
+    else setActive(i => (i - 1 + FEATURES.length) % FEATURES.length)
+  }
 
   const f = FEATURES[active]
 
@@ -662,14 +672,8 @@ function Features() {
             key={active}
             initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }}
             transition={{ duration: 0.35, ease: 'easeOut' }}
-            drag="x"
-            dragConstraints={{ left: 0, right: 0 }}
-            dragElastic={0.15}
-            onDragEnd={(_, info) => {
-              if (info.offset.x < -60) setActive(i => (i + 1) % FEATURES.length)
-              else if (info.offset.x > 60) setActive(i => (i - 1 + FEATURES.length) % FEATURES.length)
-            }}
-            className={`rounded-3xl p-8 md:p-12 flex flex-col md:flex-row gap-8 md:gap-16 items-start cursor-grab active:cursor-grabbing select-none ${f.dark ? 'bg-gray-950' : 'bg-white border border-gray-100'}`}
+            onWheel={handleWheel}
+            className={`rounded-3xl p-8 md:p-12 flex flex-col md:flex-row gap-8 md:gap-16 items-start ${f.dark ? 'bg-gray-950' : 'bg-white border border-gray-100'}`}
           >
             <div className="flex-1">
               <span className={`inline-block text-[10px] font-bold tracking-[0.14em] uppercase px-3 py-1 rounded-full mb-5 ${f.dark ? 'bg-white/10 text-violet-400' : 'bg-violet-50 text-violet-700'}`}>
