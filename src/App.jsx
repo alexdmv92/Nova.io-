@@ -788,43 +788,69 @@ function Compare() {
   )
 }
 
-function Testimonials() {
+function TestimonialCard({ t }) {
   return (
-    <section className="bg-white py-28 px-6">
-      <div className="max-w-6xl mx-auto">
+    <div className="flex flex-col bg-gray-50 border border-gray-100 rounded-2xl p-6 w-[300px] shrink-0">
+      <Stars />
+      <p className="flex-1 mt-4 text-[13px] text-gray-700 leading-[1.75]">&ldquo;{t.quote}&rdquo;</p>
+      <div className="mt-5 pt-5 border-t border-gray-100 flex items-center gap-2.5">
+        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-violet-500 to-violet-700 flex items-center justify-center text-white text-[10px] font-bold shrink-0">
+          {t.initials}
+        </div>
+        <span className="text-[13px] font-bold text-gray-900">{t.name}</span>
+      </div>
+    </div>
+  )
+}
+
+function Testimonials() {
+  const [idx, setIdx] = useState(0)
+  const total = TESTIMONIALS.length
+
+  useEffect(() => {
+    const t = setInterval(() => setIdx(i => (i + 1) % total), 3500)
+    return () => clearInterval(t)
+  }, [total])
+
+  return (
+    <section className="bg-white py-28 overflow-hidden">
+      <div className="max-w-6xl mx-auto px-6">
         <div className="text-center mb-16">
           <Reveal><p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-violet-600 mb-4">Avis clients</p></Reveal>
           <SplitReveal text="Ils en parlent mieux que nous."
             className="text-[38px] md:text-[48px] font-black text-gray-900 tracking-[-0.02em] leading-[1.1]" />
         </div>
+      </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-          {TESTIMONIALS.map((t, i) => (
-            <motion.div key={t.name}
-              initial={{ opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }} transition={{ duration: 0.5, delay: i * 0.07 }}
-              whileHover={{ y: -8, boxShadow: '0 28px 48px -12px rgba(139,92,246,0.15)' }}
-              className="flex flex-col bg-gray-50 border border-gray-100 rounded-2xl p-6 cursor-default"
-            >
-              <Stars />
-              <p className="flex-1 mt-4 text-[13px] text-gray-700 leading-[1.75]">&ldquo;{t.quote}&rdquo;</p>
-              <div className="mt-5 pt-5 border-t border-gray-100 flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-violet-500 to-violet-700 flex items-center justify-center text-white text-[10px] font-bold shrink-0">
-                  {t.initials}
-                </div>
-                <span className="text-[13px] font-bold text-gray-900">{t.name}</span>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+      {/* Row 1 — scroll left */}
+      <div className="relative mb-4 overflow-hidden">
+        <motion.div
+          animate={{ x: [`0%`, `-50%`] }}
+          transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
+          className="flex gap-4 w-max"
+        >
+          {[...TESTIMONIALS, ...TESTIMONIALS].map((t, i) => <TestimonialCard key={i} t={t} />)}
+        </motion.div>
+      </div>
 
-        {/* Second marquee of quotes */}
-        <div className="mt-10 overflow-hidden">
-          <Marquee
-            items={TESTIMONIALS.map(t => `"${t.quote.slice(0, 60)}…" — ${t.name}`)}
-            speed={45}
+      {/* Row 2 — scroll right */}
+      <div className="relative overflow-hidden">
+        <motion.div
+          animate={{ x: [`-50%`, `0%`] }}
+          transition={{ duration: 35, repeat: Infinity, ease: 'linear' }}
+          className="flex gap-4 w-max"
+        >
+          {[...TESTIMONIALS, ...TESTIMONIALS].map((t, i) => <TestimonialCard key={i} t={t} />)}
+        </motion.div>
+      </div>
+
+      {/* Dot indicators */}
+      <div className="flex justify-center gap-2 mt-10">
+        {TESTIMONIALS.map((_, i) => (
+          <button key={i} onClick={() => setIdx(i)}
+            className={`rounded-full transition-all duration-300 ${i === idx % total ? 'w-5 h-2 bg-violet-600' : 'w-2 h-2 bg-gray-200'}`}
           />
-        </div>
+        ))}
       </div>
     </section>
   )
@@ -1288,11 +1314,12 @@ function ROICalculator() {
               <label className="text-[11px] font-bold uppercase tracking-[0.14em] text-gray-500 mb-3 block">CA mensuel Uber Eats / Deliveroo (€)</label>
               <div className="relative">
                 <input
-                  type="number" value={revenue} onChange={e => setRevenue(e.target.value)}
+                  type="text" inputMode="numeric" pattern="[0-9]*"
+                  value={revenue} onChange={e => setRevenue(e.target.value.replace(/[^0-9]/g, ''))}
                   placeholder="Ex : 5 000"
-                  className="w-full bg-white/[0.06] border border-white/[0.10] rounded-2xl px-6 py-4 text-[24px] font-black text-white placeholder-gray-700 focus:outline-none focus:ring-2 focus:ring-violet-500 transition-all"
+                  className="w-full bg-white/[0.06] border border-white/[0.10] rounded-2xl pl-6 pr-14 py-4 text-[24px] font-black text-white placeholder-gray-700 focus:outline-none focus:ring-2 focus:ring-violet-500 transition-all"
                 />
-                <span className="absolute right-6 top-1/2 -translate-y-1/2 text-[20px] font-black text-gray-600">€</span>
+                <span className="absolute right-5 top-1/2 -translate-y-1/2 text-[22px] font-black text-gray-600 pointer-events-none">€</span>
               </div>
             </div>
             {monthly > 0 ? (
