@@ -3,23 +3,8 @@ import emailjs from '@emailjs/browser'
 import { motion, useInView, useScroll, useTransform, AnimatePresence, useSpring, useMotionValue } from 'framer-motion'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import Lenis from '@studio-freight/lenis'
 
 gsap.registerPlugin(ScrollTrigger)
-
-// ─── Lenis smooth scroll ──────────────────────────────────────────────────────
-
-function useLenis() {
-  useEffect(() => {
-    const lenis = new Lenis({ lerp: 0.08, smoothWheel: true })
-    const raf = (time) => { lenis.raf(time); requestAnimationFrame(raf) }
-    requestAnimationFrame(raf)
-    lenis.on('scroll', ScrollTrigger.update)
-    gsap.ticker.add((time) => lenis.raf(time * 1000))
-    gsap.ticker.lagSmoothing(0)
-    return () => { lenis.destroy(); gsap.ticker.remove((time) => lenis.raf(time * 1000)) }
-  }, [])
-}
 
 // ─── Text scramble hook ───────────────────────────────────────────────────────
 
@@ -1202,29 +1187,6 @@ function Contact() {
   )
 }
 
-function CustomCursor() {
-  const dot = useRef(null)
-  const ring = useRef(null)
-  const mx = useMotionValue(0)
-  const my = useMotionValue(0)
-  const rx = useSpring(mx, { stiffness: 80, damping: 18 })
-  const ry = useSpring(my, { stiffness: 80, damping: 18 })
-
-  useEffect(() => {
-    const move = (e) => { mx.set(e.clientX); my.set(e.clientY) }
-    window.addEventListener('mousemove', move)
-    return () => window.removeEventListener('mousemove', move)
-  }, [mx, my])
-
-  return (
-    <>
-      <motion.div ref={dot} style={{ x: mx, y: my, translateX: '-50%', translateY: '-50%' }}
-        className="fixed top-0 left-0 w-2.5 h-2.5 bg-violet-500 rounded-full pointer-events-none z-[9999] mix-blend-difference hidden md:block" />
-      <motion.div ref={ring} style={{ x: rx, y: ry, translateX: '-50%', translateY: '-50%' }}
-        className="fixed top-0 left-0 w-9 h-9 border border-violet-400/40 rounded-full pointer-events-none z-[9998] hidden md:block" />
-    </>
-  )
-}
 
 function SocialProofToast() {
   const [toast, setToast] = useState(null)
@@ -1721,12 +1683,10 @@ function LegalModal({ type, onClose }) {
 // ─── App ──────────────────────────────────────────────────────────────────────
 
 export default function App() {
-  useLenis()
   const [legalModal, setLegalModal] = useState(null)
 
   return (
     <div className="min-h-screen font-sans antialiased">
-      <CustomCursor />
       <Navbar />
       <main>
         <Hero />
