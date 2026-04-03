@@ -258,6 +258,34 @@ const FAQS = [
   { q: 'Vous travaillez avec tous types de restaurants ?', a: 'Oui — cuisine du monde, pizzerias, sushis, burgers, boulangeries, sur place, livraison, click & collect.' },
 ]
 
+const PORTFOLIO = [
+  {
+    name: 'Le Taj Mahal', type: 'Restaurant indien · Clichy', tag: 'Nova Menu',
+    description: 'Commande en ligne, menu digital, click & collect. Uber Eats supprimé en 3 semaines.',
+    stats: ['+340€/mois récupérés', 'Livré en 10 j.'],
+    color: 'from-amber-500/20 to-orange-600/10', accent: 'bg-amber-500',
+  },
+  {
+    name: 'Électro Bâti 92', type: 'Artisan électricien · Levallois', tag: 'Nova Vitrine',
+    description: 'Site vitrine 5 pages, formulaire devis, SEO local optimisé.',
+    stats: ['Top 3 Google local', 'Livré en 9 j.'],
+    color: 'from-blue-500/20 to-indigo-600/10', accent: 'bg-blue-500',
+  },
+  {
+    name: 'Boulangerie Morin', type: 'Boulangerie artisanale · Neuilly', tag: 'Nova Vitrine',
+    description: 'Vitrine moderne, horaires, carte produits, intégration Google Maps.',
+    stats: ['+60% visites organiques', 'Livré en 11 j.'],
+    color: 'from-rose-500/20 to-pink-600/10', accent: 'bg-rose-500',
+  },
+]
+
+const ZONES = [
+  'Paris (75)', 'Clichy', 'Levallois-Perret', 'Neuilly-sur-Seine', 'Courbevoie',
+  'Nanterre', 'Boulogne-Billancourt', 'Issy-les-Moulineaux', 'Saint-Denis',
+  'Montreuil', 'Vincennes', 'Créteil', 'Versailles', 'Argenteuil', 'Colombes',
+  'Asnières-sur-Seine', 'Rueil-Malmaison', 'Suresnes', 'Puteaux', 'Gennevilliers',
+]
+
 // ─── UI ───────────────────────────────────────────────────────────────────────
 
 function Stars() {
@@ -285,7 +313,7 @@ function Check({ light }) {
 function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
-  const links = ['Services', 'Résultats', 'Tarifs', 'FAQ']
+  const links = ['Services', 'Portfolio', 'Résultats', 'Tarifs', 'FAQ']
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 24)
@@ -447,7 +475,7 @@ function Hero() {
         <motion.div
           initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.62 }}
-          className="flex flex-col sm:flex-row gap-3 mb-16"
+          className="flex flex-col sm:flex-row gap-3 mb-6"
         >
           <MagneticButton href="#contact"
             className="inline-flex items-center justify-center gap-2 bg-violet-600 text-white font-semibold text-[14px] px-8 py-4 rounded-xl hover:bg-violet-500 transition-colors shadow-2xl shadow-violet-900/50">
@@ -460,6 +488,23 @@ function Hero() {
             className="inline-flex items-center justify-center gap-2 bg-white/[0.06] border border-white/[0.08] text-white font-semibold text-[14px] px-8 py-4 rounded-xl hover:bg-white/[0.10] transition-colors">
             Voir nos résultats
           </MagneticButton>
+        </motion.div>
+
+        {/* Trust badges */}
+        <motion.div
+          initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.72 }}
+          className="flex flex-wrap gap-3 mb-14"
+        >
+          {[
+            { icon: '⚡', label: 'Livré en 2 semaines' },
+            { icon: '💳', label: 'Paiement en 2×' },
+            { icon: '🔒', label: 'Sans engagement' },
+          ].map(({ icon, label }) => (
+            <span key={label} className="inline-flex items-center gap-2 bg-white/[0.05] border border-white/[0.08] rounded-full px-4 py-1.5 text-[12px] font-medium text-gray-400">
+              <span>{icon}</span>{label}
+            </span>
+          ))}
         </motion.div>
 
         {/* Stats */}
@@ -820,9 +865,32 @@ function Pricing() {
           ))}
         </div>
         <Reveal delay={0.2}>
-          <p className="text-center text-[12px] text-gray-400 mt-6">
-            Maintenance à partir de 50€/mois · SEO avancé · Devis sur mesure sur demande
-          </p>
+          <div className="mt-10 grid sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
+            <div className="flex items-start gap-4 bg-gray-50 border border-gray-100 rounded-2xl p-5">
+              <div className="w-9 h-9 rounded-xl bg-violet-100 flex items-center justify-center shrink-0">
+                <svg className="w-4 h-4 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                </svg>
+              </div>
+              <div>
+                <p className="text-[13px] font-bold text-gray-900 mb-0.5">Nova Care — Maintenance</p>
+                <p className="text-[12px] text-gray-500">Mises à jour, sauvegardes, corrections mineures, rapport Analytics mensuel.</p>
+                <p className="text-[13px] font-black text-violet-600 mt-2">29€ / mois</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-4 bg-gray-50 border border-gray-100 rounded-2xl p-5">
+              <div className="w-9 h-9 rounded-xl bg-indigo-100 flex items-center justify-center shrink-0">
+                <svg className="w-4 h-4 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <div>
+                <p className="text-[13px] font-bold text-gray-900 mb-0.5">Pack Refonte</p>
+                <p className="text-[12px] text-gray-500">Vous avez un vieux site Wix ou WordPress ? On le modernise complètement.</p>
+                <p className="text-[13px] font-black text-indigo-600 mt-2">Devis sur mesure</p>
+              </div>
+            </div>
+          </div>
         </Reveal>
       </div>
     </section>
@@ -1011,6 +1079,124 @@ function Contact() {
         </Reveal>
       </div>
     </section>
+  )
+}
+
+function Portfolio() {
+  return (
+    <section id="portfolio" className="bg-white py-28 px-6">
+      <div className="max-w-6xl mx-auto">
+        <div className="text-center mb-16">
+          <Reveal><p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-violet-600 mb-4">Réalisations</p></Reveal>
+          <SplitReveal text="Nos derniers projets." className="text-[38px] md:text-[48px] font-black text-gray-900 tracking-[-0.02em] leading-[1.1]" />
+          <Reveal delay={0.1}><p className="text-[15px] text-gray-500 mt-4 max-w-xl mx-auto">Des sites qui travaillent pour nos clients, même quand ils dorment.</p></Reveal>
+        </div>
+        <div className="grid md:grid-cols-3 gap-6">
+          {PORTFOLIO.map((p, i) => (
+            <motion.div key={p.name}
+              initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }} transition={{ delay: i * 0.1 }}
+              className={`relative rounded-2xl bg-gradient-to-br ${p.color} border border-gray-100 p-7 flex flex-col gap-4 hover:shadow-xl transition-shadow`}
+            >
+              <div className="flex items-start justify-between">
+                <div>
+                  <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-gray-400 mb-1">{p.type}</p>
+                  <h3 className="text-[18px] font-black text-gray-900">{p.name}</h3>
+                </div>
+                <span className={`${p.accent} text-white text-[10px] font-bold px-2.5 py-1 rounded-full`}>{p.tag}</span>
+              </div>
+              <p className="text-[13px] text-gray-600 leading-relaxed">{p.description}</p>
+              <div className="flex gap-3 mt-auto pt-2">
+                {p.stats.map(s => (
+                  <span key={s} className="text-[11px] font-semibold text-gray-700 bg-white/70 border border-gray-100 px-3 py-1 rounded-full">{s}</span>
+                ))}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+        <Reveal delay={0.2}>
+          <div className="text-center mt-10">
+            <p className="text-[13px] text-gray-400 mb-4">Votre établissement pourrait être le prochain.</p>
+            <MagneticButton href="#contact"
+              className="inline-flex items-center gap-2 bg-gray-900 text-white font-semibold text-[14px] px-7 py-3 rounded-xl hover:bg-violet-700 transition-colors">
+              Démarrer mon projet →
+            </MagneticButton>
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  )
+}
+
+function Calendly() {
+  return (
+    <section className="bg-[#080912] py-24 px-6">
+      <div className="max-w-3xl mx-auto text-center">
+        <Reveal><p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-violet-400 mb-4">Réserver un appel</p></Reveal>
+        <SplitReveal text="30 minutes. Gratuit. Sans engagement." className="text-[32px] md:text-[44px] font-black text-white tracking-[-0.02em] leading-[1.1] mb-5" />
+        <Reveal delay={0.1}>
+          <p className="text-[15px] text-gray-500 mb-10 max-w-md mx-auto">
+            On analyse votre situation, on vous explique ce qu'on peut faire. Vous repartez avec un plan clair — même si vous ne signez pas.
+          </p>
+        </Reveal>
+        <Reveal delay={0.2}>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <a href="https://calendly.com/nova-io" target="_blank" rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 bg-violet-600 text-white font-semibold text-[14px] px-8 py-4 rounded-xl hover:bg-violet-500 transition-colors shadow-2xl shadow-violet-900/50">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+              Choisir un créneau
+            </a>
+            <a href="https://wa.me/33600000000" target="_blank" rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 bg-white/[0.06] border border-white/[0.08] text-white font-semibold text-[14px] px-8 py-4 rounded-xl hover:bg-white/[0.10] transition-colors">
+              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+              </svg>
+              WhatsApp
+            </a>
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  )
+}
+
+function Zones() {
+  return (
+    <section className="bg-gray-50 py-20 px-6 border-t border-gray-100">
+      <div className="max-w-4xl mx-auto text-center">
+        <Reveal><p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-violet-600 mb-4">Zones d'intervention</p></Reveal>
+        <Reveal delay={0.05}>
+          <h2 className="text-[26px] font-black text-gray-900 tracking-tight mb-2">Création de sites web en Île-de-France</h2>
+          <p className="text-[13px] text-gray-500 mb-10">Nous intervenons dans toute l'Île-de-France pour les restaurants, artisans et TPE locaux.</p>
+        </Reveal>
+        <div className="flex flex-wrap gap-2 justify-center">
+          {ZONES.map((ville, i) => (
+            <motion.span key={ville}
+              initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }} transition={{ delay: i * 0.03 }}
+              className="text-[12px] font-medium text-gray-600 bg-white border border-gray-200 px-3.5 py-1.5 rounded-full hover:border-violet-400 hover:text-violet-700 transition-colors"
+            >
+              {ville}
+            </motion.span>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function WhatsAppButton() {
+  return (
+    <a href="https://wa.me/33600000000" target="_blank" rel="noopener noreferrer"
+      className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-[#25D366] rounded-full flex items-center justify-center shadow-2xl hover:scale-110 active:scale-95 transition-transform"
+      aria-label="Contacter sur WhatsApp"
+    >
+      <svg className="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+      </svg>
+    </a>
   )
 }
 
@@ -1218,14 +1404,18 @@ export default function App() {
         <Results />
         <Features />
         <Process />
+        <Portfolio />
         <Compare />
         <Testimonials />
         <Pricing />
         <FAQ />
+        <Calendly />
         <FinalCTA />
         <Contact />
       </main>
+      <Zones />
       <Footer onLegal={setLegalModal} />
+      <WhatsAppButton />
       {legalModal && <LegalModal type={legalModal} onClose={() => setLegalModal(null)} />}
     </div>
   )
