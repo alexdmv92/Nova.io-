@@ -445,7 +445,7 @@ function Hero() {
         <motion.div
           initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.1 }}
-          className="inline-flex items-center gap-3 bg-white/[0.05] border border-white/[0.08] rounded-full px-5 py-2 mb-10"
+          className="inline-flex items-center gap-3 bg-white/[0.05] border border-white/[0.08] rounded-full px-5 py-2 mb-10 whitespace-nowrap"
         >
           <span className="relative flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
@@ -773,8 +773,8 @@ function Compare() {
 
         <Reveal>
           <div className="overflow-x-auto rounded-2xl border border-white/[0.08]">
-            <div className="min-w-[380px]">
-              <div className="grid grid-cols-4 bg-white/[0.04] border-b border-white/[0.08]">
+            <div className="min-w-[440px]">
+              <div style={{ gridTemplateColumns: 'minmax(120px,1.5fr) repeat(3,1fr)' }} className="grid bg-white/[0.04] border-b border-white/[0.08]">
                 <div className="p-3 md:p-5" />
                 <div className="p-3 md:p-5 text-center">
                   <div className="inline-flex items-center gap-1 bg-violet-600/20 border border-violet-500/30 rounded-lg px-2 py-1">
@@ -788,7 +788,8 @@ function Compare() {
                 <motion.div key={row.label}
                   initial={{ opacity: 0, x: -16 }} whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }} transition={{ delay: i * 0.07, duration: 0.4 }}
-                  className={`grid grid-cols-4 ${i < COMPARE.length - 1 ? 'border-b border-white/[0.05]' : ''}`}
+                  style={{ gridTemplateColumns: 'minmax(120px,1.5fr) repeat(3,1fr)' }}
+                  className={`grid ${i < COMPARE.length - 1 ? 'border-b border-white/[0.05]' : ''}`}
                 >
                   <div className="p-3 md:p-5 text-[11px] md:text-[13px] font-medium text-gray-400 leading-snug">{row.label}</div>
                   {[row.nova, row.agence, row.diy].map((val, j) => (
@@ -1417,7 +1418,7 @@ function Portfolio() {
                   <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-gray-400 mb-1">{p.type}</p>
                   <h3 className="text-[18px] font-black text-gray-900">{p.name}</h3>
                 </div>
-                <span className={`${p.accent} text-white text-[10px] font-bold px-2.5 py-1 rounded-full`}>{p.tag}</span>
+                <span className={`${p.accent} text-white text-[10px] font-bold px-2.5 py-1 rounded-full whitespace-nowrap shrink-0`}>{p.tag}</span>
               </div>
               <p className="text-[13px] text-gray-600 leading-relaxed">{p.description}</p>
               <div className="flex gap-3 mt-auto pt-2">
