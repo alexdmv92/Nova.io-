@@ -280,16 +280,16 @@ const PORTFOLIO = [
 ]
 
 const SOCIAL_PROOFS = [
-  { name: 'Karim', city: 'Clichy' },
-  { name: 'Marie', city: 'Paris 17e' },
-  { name: 'Sofiane', city: 'Levallois' },
-  { name: 'Nadia', city: 'Courbevoie' },
-  { name: 'Thomas', city: 'Neuilly' },
-  { name: 'Fatou', city: 'Saint-Denis' },
-  { name: 'Lucas', city: 'Boulogne' },
-  { name: 'Anwar', city: 'Asnières' },
-  { name: 'Claire', city: 'Montreuil' },
-  { name: 'Rayan', city: 'Nanterre' },
+  { name: 'Karim', city: 'Paris 18e' },
+  { name: 'Marie', city: 'Paris 11e' },
+  { name: 'Sofiane', city: 'Paris 20e' },
+  { name: 'Nadia', city: 'Paris 15e' },
+  { name: 'Thomas', city: 'Paris 9e' },
+  { name: 'Fatou', city: 'Paris 13e' },
+  { name: 'Lucas', city: 'Paris 10e' },
+  { name: 'Anwar', city: 'Paris 19e' },
+  { name: 'Claire', city: 'Paris 12e' },
+  { name: 'Rayan', city: 'Paris 14e' },
 ]
 
 const SPOTS_REMAINING = 3
