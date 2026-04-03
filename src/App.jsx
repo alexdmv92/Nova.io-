@@ -296,10 +296,10 @@ const SPOTS_REMAINING = 3
 const CURRENT_MONTH = 'avril'
 
 const ZONES = [
-  'Paris (75)', 'Clichy', 'Levallois-Perret', 'Neuilly-sur-Seine', 'Courbevoie',
-  'Nanterre', 'Boulogne-Billancourt', 'Issy-les-Moulineaux', 'Saint-Denis',
-  'Montreuil', 'Vincennes', 'Créteil', 'Versailles', 'Argenteuil', 'Colombes',
-  'Asnières-sur-Seine', 'Rueil-Malmaison', 'Suresnes', 'Puteaux', 'Gennevilliers',
+  'Paris 1er–4e', 'Paris 5e–8e', 'Paris 9e–12e', 'Paris 13e–16e', 'Paris 17e–20e',
+  'Boulogne-Billancourt', 'Neuilly-sur-Seine', 'Levallois-Perret', 'Issy-les-Moulineaux',
+  'Vincennes', 'Saint-Mandé', 'Charenton-le-Pont', 'Ivry-sur-Seine', 'Vitry-sur-Seine',
+  'Montrouge', 'Malakoff', 'Vanves', 'Clamart', 'Meudon', 'Sèvres',
 ]
 
 // ─── UI ───────────────────────────────────────────────────────────────────────
