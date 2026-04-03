@@ -279,6 +279,22 @@ const PORTFOLIO = [
   },
 ]
 
+const SOCIAL_PROOFS = [
+  { name: 'Karim', city: 'Clichy' },
+  { name: 'Marie', city: 'Paris 17e' },
+  { name: 'Sofiane', city: 'Levallois' },
+  { name: 'Nadia', city: 'Courbevoie' },
+  { name: 'Thomas', city: 'Neuilly' },
+  { name: 'Fatou', city: 'Saint-Denis' },
+  { name: 'Lucas', city: 'Boulogne' },
+  { name: 'Anwar', city: 'Asnières' },
+  { name: 'Claire', city: 'Montreuil' },
+  { name: 'Rayan', city: 'Nanterre' },
+]
+
+const SPOTS_REMAINING = 3
+const CURRENT_MONTH = 'avril'
+
 const ZONES = [
   'Paris (75)', 'Clichy', 'Levallois-Perret', 'Neuilly-sur-Seine', 'Courbevoie',
   'Nanterre', 'Boulogne-Billancourt', 'Issy-les-Moulineaux', 'Saint-Denis',
@@ -505,6 +521,13 @@ function Hero() {
               <span>{icon}</span>{label}
             </span>
           ))}
+          <span className="inline-flex items-center gap-2 bg-amber-500/10 border border-amber-500/30 rounded-full px-4 py-1.5 text-[12px] font-medium text-amber-400">
+            <span className="relative flex h-1.5 w-1.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-amber-400" />
+            </span>
+            {SPOTS_REMAINING} créneaux disponibles en {CURRENT_MONTH}
+          </span>
         </motion.div>
 
         {/* Stats */}
@@ -864,8 +887,19 @@ function Pricing() {
             </motion.div>
           ))}
         </div>
+        <Reveal delay={0.15}>
+          <div className="flex items-center justify-center gap-2 mt-8 mb-2">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-400" />
+            </span>
+            <p className="text-[13px] font-semibold text-amber-600">
+              Plus que <span className="font-black">{SPOTS_REMAINING} créneaux</span> disponibles en {CURRENT_MONTH}
+            </p>
+          </div>
+        </Reveal>
         <Reveal delay={0.2}>
-          <div className="mt-10 grid sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
+          <div className="mt-4 grid sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
             <div className="flex items-start gap-4 bg-gray-50 border border-gray-100 rounded-2xl p-5">
               <div className="w-9 h-9 rounded-xl bg-violet-100 flex items-center justify-center shrink-0">
                 <svg className="w-4 h-4 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1004,7 +1038,21 @@ function Contact() {
         <div className="text-center mb-12">
           <Reveal><p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-violet-600 mb-4">Contact</p></Reveal>
           <SplitReveal text="Parlons de votre projet." className="text-[38px] font-black text-gray-900 tracking-[-0.02em] leading-[1.1] mb-3" />
-          <Reveal delay={0.15}><p className="text-[14px] text-gray-500">Réponse sous 24h · Premier échange offert</p></Reveal>
+          <Reveal delay={0.15}>
+            <div className="flex items-center justify-center gap-3 flex-wrap">
+              <span className="inline-flex items-center gap-1.5 text-[13px] text-gray-500">
+                <span className="relative flex h-1.5 w-1.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-400" />
+                </span>
+                Réponse sous 2h
+              </span>
+              <span className="text-gray-300">·</span>
+              <span className="text-[13px] text-gray-500">Premier échange offert</span>
+              <span className="text-gray-300">·</span>
+              <span className="text-[13px] text-gray-500">Sans engagement</span>
+            </div>
+          </Reveal>
         </div>
 
         <Reveal delay={0.1}>
@@ -1076,6 +1124,214 @@ function Contact() {
               </motion.form>
             )}
           </AnimatePresence>
+        </Reveal>
+      </div>
+    </section>
+  )
+}
+
+function CustomCursor() {
+  const dot = useRef(null)
+  const ring = useRef(null)
+  const mx = useMotionValue(0)
+  const my = useMotionValue(0)
+  const rx = useSpring(mx, { stiffness: 80, damping: 18 })
+  const ry = useSpring(my, { stiffness: 80, damping: 18 })
+
+  useEffect(() => {
+    const move = (e) => { mx.set(e.clientX); my.set(e.clientY) }
+    window.addEventListener('mousemove', move)
+    return () => window.removeEventListener('mousemove', move)
+  }, [mx, my])
+
+  return (
+    <>
+      <motion.div ref={dot} style={{ x: mx, y: my, translateX: '-50%', translateY: '-50%' }}
+        className="fixed top-0 left-0 w-2.5 h-2.5 bg-violet-500 rounded-full pointer-events-none z-[9999] mix-blend-difference hidden md:block" />
+      <motion.div ref={ring} style={{ x: rx, y: ry, translateX: '-50%', translateY: '-50%' }}
+        className="fixed top-0 left-0 w-9 h-9 border border-violet-400/40 rounded-full pointer-events-none z-[9998] hidden md:block" />
+    </>
+  )
+}
+
+function SocialProofToast() {
+  const [toast, setToast] = useState(null)
+  const shown = useRef(new Set())
+
+  useEffect(() => {
+    const show = () => {
+      const remaining = SOCIAL_PROOFS.filter((_, i) => !shown.current.has(i))
+      if (remaining.length === 0) return
+      const idx = Math.floor(Math.random() * remaining.length)
+      const item = remaining[idx]
+      shown.current.add(SOCIAL_PROOFS.indexOf(item))
+      setToast(item)
+      setTimeout(() => setToast(null), 4500)
+    }
+    const t1 = setTimeout(show, 6000)
+    const interval = setInterval(show, 55000 + Math.random() * 30000)
+    return () => { clearTimeout(t1); clearInterval(interval) }
+  }, [])
+
+  return (
+    <AnimatePresence>
+      {toast && (
+        <motion.div
+          key={toast.name}
+          initial={{ opacity: 0, y: 20, x: 0 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 20 }}
+          transition={{ duration: 0.4, ease: 'easeOut' }}
+          className="fixed bottom-24 left-4 z-50 bg-white border border-gray-100 rounded-2xl shadow-xl px-4 py-3 flex items-center gap-3 max-w-[260px]"
+        >
+          <div className="w-8 h-8 rounded-full bg-violet-100 flex items-center justify-center shrink-0 text-[13px]">🔔</div>
+          <p className="text-[12px] text-gray-700 leading-snug">
+            <span className="font-bold">{toast.name}</span> de <span className="font-bold">{toast.city}</span> vient de démarrer un projet
+          </p>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  )
+}
+
+function ExitPopup() {
+  const [show, setShow] = useState(false)
+  const [email, setEmail] = useState('')
+  const [done, setDone] = useState(false)
+  const triggered = useRef(false)
+
+  useEffect(() => {
+    const handler = (e) => {
+      if (e.clientY < 8 && !triggered.current) {
+        triggered.current = true
+        setTimeout(() => setShow(true), 300)
+      }
+    }
+    document.addEventListener('mouseleave', handler)
+    return () => document.removeEventListener('mouseleave', handler)
+  }, [])
+
+  return (
+    <AnimatePresence>
+      {show && (
+        <motion.div
+          initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+          className="fixed inset-0 z-[9990] bg-black/60 backdrop-blur-sm flex items-center justify-center px-4"
+          onClick={(e) => { if (e.target === e.currentTarget) setShow(false) }}
+        >
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0, y: 20 }} animate={{ scale: 1, opacity: 1, y: 0 }} exit={{ scale: 0.9, opacity: 0 }}
+            transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+            className="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl relative"
+          >
+            <button onClick={() => setShow(false)} className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            {done ? (
+              <div className="text-center py-4">
+                <div className="w-14 h-14 bg-violet-50 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <svg className="w-6 h-6 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <h3 className="text-[18px] font-black text-gray-900 mb-2">C'est noté !</h3>
+                <p className="text-[13px] text-gray-500">On vous envoie votre estimation sous 2h.</p>
+              </div>
+            ) : (
+              <>
+                <div className="text-center mb-6">
+                  <p className="text-[28px] mb-2">⚡</p>
+                  <h3 className="text-[22px] font-black text-gray-900 mb-2">Avant de partir…</h3>
+                  <p className="text-[14px] text-gray-500">Recevez une estimation gratuite pour votre site en moins de 2 minutes.</p>
+                </div>
+                <div className="flex gap-2">
+                  <input
+                    type="email" value={email} onChange={e => setEmail(e.target.value)}
+                    placeholder="votre@email.com"
+                    className="flex-1 border border-gray-200 rounded-xl px-4 py-3 text-[13px] focus:outline-none focus:ring-2 focus:ring-violet-500"
+                  />
+                  <button
+                    onClick={() => { if (email) setDone(true) }}
+                    className="bg-violet-600 text-white font-semibold text-[13px] px-4 py-3 rounded-xl hover:bg-violet-500 transition-colors"
+                  >
+                    Envoyer
+                  </button>
+                </div>
+                <p className="text-[11px] text-gray-400 text-center mt-3">Aucun spam. Réponse sous 2h.</p>
+              </>
+            )}
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  )
+}
+
+function ROICalculator() {
+  const [revenue, setRevenue] = useState('')
+  const rate = 0.30
+  const monthly = revenue ? Math.round(parseFloat(revenue) * rate) : 0
+  const annual = monthly * 12
+  const months = monthly > 0 ? Math.ceil(700 / monthly) : 0
+
+  return (
+    <section className="bg-[#080912] py-24 px-6">
+      <div className="max-w-3xl mx-auto">
+        <div className="text-center mb-12">
+          <Reveal><p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-violet-400 mb-4">Calculateur ROI</p></Reveal>
+          <SplitReveal text="Combien perdez-vous vraiment ?" className="text-[32px] md:text-[44px] font-black text-white tracking-[-0.02em] leading-[1.1]" />
+          <Reveal delay={0.1}><p className="text-[15px] text-gray-500 mt-4">Entrez votre chiffre d'affaires mensuel sur les plateformes de livraison.</p></Reveal>
+        </div>
+        <Reveal delay={0.15}>
+          <div className="bg-white/[0.04] border border-white/[0.08] rounded-3xl p-8">
+            <div className="mb-8">
+              <label className="text-[11px] font-bold uppercase tracking-[0.14em] text-gray-500 mb-3 block">CA mensuel Uber Eats / Deliveroo (€)</label>
+              <div className="relative">
+                <input
+                  type="number" value={revenue} onChange={e => setRevenue(e.target.value)}
+                  placeholder="Ex : 5 000"
+                  className="w-full bg-white/[0.06] border border-white/[0.10] rounded-2xl px-6 py-4 text-[24px] font-black text-white placeholder-gray-700 focus:outline-none focus:ring-2 focus:ring-violet-500 transition-all"
+                />
+                <span className="absolute right-6 top-1/2 -translate-y-1/2 text-[20px] font-black text-gray-600">€</span>
+              </div>
+            </div>
+            {monthly > 0 ? (
+              <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="grid sm:grid-cols-3 gap-4">
+                <div className="bg-red-500/10 border border-red-500/20 rounded-2xl p-5 text-center">
+                  <p className="text-[11px] font-bold uppercase tracking-wider text-red-400 mb-2">Perdu / mois</p>
+                  <p className="text-[32px] font-black text-red-400">-{monthly.toLocaleString('fr-FR')}€</p>
+                  <p className="text-[11px] text-gray-600 mt-1">en commissions (30%)</p>
+                </div>
+                <div className="bg-red-500/10 border border-red-500/20 rounded-2xl p-5 text-center">
+                  <p className="text-[11px] font-bold uppercase tracking-wider text-red-400 mb-2">Perdu / an</p>
+                  <p className="text-[32px] font-black text-red-400">-{annual.toLocaleString('fr-FR')}€</p>
+                  <p className="text-[11px] text-gray-600 mt-1">partis en commissions</p>
+                </div>
+                <div className="bg-violet-500/10 border border-violet-500/20 rounded-2xl p-5 text-center">
+                  <p className="text-[11px] font-bold uppercase tracking-wider text-violet-400 mb-2">Rentabilisé en</p>
+                  <p className="text-[32px] font-black text-violet-400">{months} mois</p>
+                  <p className="text-[11px] text-gray-600 mt-1">avec Nova Menu à 700€</p>
+                </div>
+              </motion.div>
+            ) : (
+              <div className="grid sm:grid-cols-3 gap-4">
+                {['Perdu / mois', 'Perdu / an', 'Rentabilisé en'].map(l => (
+                  <div key={l} className="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-5 text-center">
+                    <p className="text-[11px] font-bold uppercase tracking-wider text-gray-700 mb-2">{l}</p>
+                    <p className="text-[32px] font-black text-gray-700">—</p>
+                  </div>
+                ))}
+              </div>
+            )}
+            {monthly > 0 && (
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }} className="mt-6 text-center">
+                <MagneticButton href="#contact"
+                  className="inline-flex items-center gap-2 bg-violet-600 text-white font-semibold text-[14px] px-8 py-3.5 rounded-xl hover:bg-violet-500 transition-colors">
+                  Récupérer mes {monthly.toLocaleString('fr-FR')}€/mois →
+                </MagneticButton>
+              </motion.div>
+            )}
+          </div>
         </Reveal>
       </div>
     </section>
@@ -1397,10 +1653,12 @@ export default function App() {
 
   return (
     <div className="min-h-screen font-sans antialiased">
+      <CustomCursor />
       <Navbar />
       <main>
         <Hero />
         <TrustBar />
+        <ROICalculator />
         <Results />
         <Features />
         <Process />
@@ -1416,6 +1674,8 @@ export default function App() {
       <Zones />
       <Footer onLegal={setLegalModal} />
       <WhatsAppButton />
+      <SocialProofToast />
+      <ExitPopup />
       {legalModal && <LegalModal type={legalModal} onClose={() => setLegalModal(null)} />}
     </div>
   )
