@@ -1024,11 +1024,8 @@ function Footer({ onLegal }) {
       <div className="max-w-6xl mx-auto">
         <div className="grid md:grid-cols-4 gap-10 pb-12 border-b border-white/[0.06]">
           <div className="md:col-span-2">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="h-8 w-8 rounded-xl bg-gradient-to-br from-violet-500 to-violet-800 flex items-center justify-center">
-                <span className="text-[11px] font-black text-white">N</span>
-              </div>
-              <span className="font-bold text-[15px] tracking-tight text-white">Nova<span className="text-violet-500">.IO</span></span>
+            <div className="flex items-center mb-4">
+              <img src="/logo.png" alt="Nova.io" className="h-8 w-auto object-contain rounded-lg" />
             </div>
             <p className="text-[13px] text-gray-600 leading-relaxed max-w-xs">
               Sites web professionnels pour les restaurants et artisans d&apos;Île-de-France. Livraison en 2 semaines.
