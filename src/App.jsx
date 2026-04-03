@@ -461,7 +461,7 @@ function Hero() {
             <motion.p
               initial={{ y: '100%' }} animate={{ y: 0 }}
               transition={{ duration: 0.7, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
-              className="text-[56px] md:text-[84px] font-black text-white leading-[1.02] tracking-[-0.03em]"
+              className="text-[42px] sm:text-[56px] md:text-[84px] font-black text-white leading-[1.02] tracking-[-0.03em]"
             >
               Des sites web qui
             </motion.p>
@@ -471,7 +471,7 @@ function Hero() {
               ref={titleRef}
               initial={{ y: '100%' }} animate={{ y: 0 }}
               transition={{ duration: 0.7, delay: 0.32, ease: [0.25, 0.46, 0.45, 0.94] }}
-              className="text-[56px] md:text-[84px] font-black leading-[1.02] tracking-[-0.03em] text-transparent bg-clip-text bg-gradient-to-r from-violet-400 via-violet-500 to-fuchsia-500"
+              className="text-[42px] sm:text-[56px] md:text-[84px] font-black leading-[1.02] tracking-[-0.03em] text-transparent bg-clip-text bg-gradient-to-r from-violet-400 via-violet-500 to-fuchsia-500"
             >
               font gagner de l'argent.
             </motion.p>
@@ -764,7 +764,7 @@ function Process() {
 
 function Compare() {
   return (
-    <section className="bg-gray-950 py-28 px-6">
+    <section className="bg-gray-950 py-28 px-6 overflow-hidden">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-16">
           <Reveal><p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-violet-400 mb-4">Comparatif</p></Reveal>
@@ -772,44 +772,46 @@ function Compare() {
         </div>
 
         <Reveal>
-          <div className="rounded-2xl border border-white/[0.08] overflow-hidden">
-            <div className="grid grid-cols-4 bg-white/[0.04] border-b border-white/[0.08]">
-              <div className="p-5" />
-              <div className="p-5 text-center">
-                <div className="inline-flex items-center gap-1.5 bg-violet-600/20 border border-violet-500/30 rounded-lg px-3 py-1.5">
-                  <span className="text-[12px] font-bold text-violet-400">Nova.IO</span>
+          <div className="overflow-x-auto rounded-2xl border border-white/[0.08]">
+            <div className="min-w-[380px]">
+              <div className="grid grid-cols-4 bg-white/[0.04] border-b border-white/[0.08]">
+                <div className="p-3 md:p-5" />
+                <div className="p-3 md:p-5 text-center">
+                  <div className="inline-flex items-center gap-1 bg-violet-600/20 border border-violet-500/30 rounded-lg px-2 py-1">
+                    <span className="text-[11px] font-bold text-violet-400">Nova.IO</span>
+                  </div>
                 </div>
+                <div className="p-3 md:p-5 text-center text-[10px] md:text-[12px] font-semibold text-gray-600 leading-tight">Agence classique</div>
+                <div className="p-3 md:p-5 text-center text-[10px] md:text-[12px] font-semibold text-gray-600">DIY</div>
               </div>
-              <div className="p-5 text-center text-[12px] font-semibold text-gray-600">Agence classique</div>
-              <div className="p-5 text-center text-[12px] font-semibold text-gray-600">DIY</div>
-            </div>
-            {COMPARE.map((row, i) => (
-              <motion.div key={row.label}
-                initial={{ opacity: 0, x: -16 }} whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }} transition={{ delay: i * 0.07, duration: 0.4 }}
-                className={`grid grid-cols-4 ${i < COMPARE.length - 1 ? 'border-b border-white/[0.05]' : ''}`}
-              >
-                <div className="p-5 text-[13px] font-medium text-gray-400">{row.label}</div>
-                {[row.nova, row.agence, row.diy].map((val, j) => (
-                  <div key={j} className={`p-5 flex justify-center items-center ${j === 0 ? 'bg-violet-600/[0.06]' : ''}`}>
-                    {val === true
-                      ? <div className="w-5 h-5 rounded-full bg-emerald-500/20 flex items-center justify-center">
-                          <svg className="w-3 h-3 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                          </svg>
-                        </div>
-                      : val === false
-                        ? <div className="w-5 h-5 rounded-full bg-red-500/10 flex items-center justify-center">
-                            <svg className="w-3 h-3 text-red-500/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M6 18L18 6M6 6l12 12" />
+              {COMPARE.map((row, i) => (
+                <motion.div key={row.label}
+                  initial={{ opacity: 0, x: -16 }} whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }} transition={{ delay: i * 0.07, duration: 0.4 }}
+                  className={`grid grid-cols-4 ${i < COMPARE.length - 1 ? 'border-b border-white/[0.05]' : ''}`}
+                >
+                  <div className="p-3 md:p-5 text-[11px] md:text-[13px] font-medium text-gray-400 leading-snug">{row.label}</div>
+                  {[row.nova, row.agence, row.diy].map((val, j) => (
+                    <div key={j} className={`p-3 md:p-5 flex justify-center items-center ${j === 0 ? 'bg-violet-600/[0.06]' : ''}`}>
+                      {val === true
+                        ? <div className="w-5 h-5 rounded-full bg-emerald-500/20 flex items-center justify-center">
+                            <svg className="w-3 h-3 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                             </svg>
                           </div>
-                        : <span className={`text-[12px] font-semibold text-center ${j === 0 ? 'text-violet-300' : 'text-gray-500'}`}>{val}</span>
-                    }
-                  </div>
-                ))}
-              </motion.div>
-            ))}
+                        : val === false
+                          ? <div className="w-5 h-5 rounded-full bg-red-500/10 flex items-center justify-center">
+                              <svg className="w-3 h-3 text-red-500/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M6 18L18 6M6 6l12 12" />
+                              </svg>
+                            </div>
+                          : <span className={`text-[10px] md:text-[12px] font-semibold text-center leading-tight ${j === 0 ? 'text-violet-300' : 'text-gray-500'}`}>{val}</span>
+                      }
+                    </div>
+                  ))}
+                </motion.div>
+              ))}
+            </div>
           </div>
         </Reveal>
       </div>
