@@ -1141,7 +1141,7 @@ function Calendly() {
         </Reveal>
         <Reveal delay={0.2}>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <a href="https://calendly.com/nova-io" target="_blank" rel="noopener noreferrer"
+            <a href="https://calendly.com/nova-iocontact/30min" target="_blank" rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2 bg-violet-600 text-white font-semibold text-[14px] px-8 py-4 rounded-xl hover:bg-violet-500 transition-colors shadow-2xl shadow-violet-900/50">
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
