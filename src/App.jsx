@@ -260,19 +260,19 @@ const FAQS = [
 
 const PORTFOLIO = [
   {
-    name: 'Le Taj Mahal', type: 'Restaurant indien · ***', tag: 'Nova Menu',
+    name: 'Le Taj M***', type: 'Restaurant indien', tag: 'Nova Menu',
     description: 'Commande en ligne, menu digital, click & collect. Uber Eats supprimé en 3 semaines.',
     stats: ['+340€/mois récupérés', 'Livré en 10 j.'],
     color: 'from-amber-500/20 to-orange-600/10', accent: 'bg-amber-500',
   },
   {
-    name: 'Électro Bâti 92', type: 'Artisan électricien · ***', tag: 'Nova Vitrine',
+    name: 'Électro B***', type: 'Artisan électricien', tag: 'Nova Vitrine',
     description: 'Site vitrine 5 pages, formulaire devis, SEO local optimisé.',
     stats: ['Top 3 Google local', 'Livré en 9 j.'],
     color: 'from-blue-500/20 to-indigo-600/10', accent: 'bg-blue-500',
   },
   {
-    name: 'Boulangerie Morin', type: 'Boulangerie artisanale · ***', tag: 'Nova Vitrine',
+    name: 'Boulangerie M***', type: 'Boulangerie artisanale', tag: 'Nova Vitrine',
     description: 'Vitrine moderne, horaires, carte produits, intégration Google Maps.',
     stats: ['+60% visites organiques', 'Livré en 11 j.'],
     color: 'from-rose-500/20 to-pink-600/10', accent: 'bg-rose-500',
