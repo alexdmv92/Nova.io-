@@ -419,8 +419,8 @@ function Hero() {
 
         {/* Scramble badge */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.1 }}
+          initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, delay: 0 }}
           className="inline-flex items-center gap-3 bg-white/[0.05] border border-white/[0.08] rounded-full px-5 py-2 mb-10 whitespace-nowrap"
         >
           <span className="relative flex h-2 w-2">
@@ -436,7 +436,7 @@ function Hero() {
           <div className="overflow-hidden mb-1">
             <motion.p
               initial={{ y: '100%' }} animate={{ y: 0 }}
-              transition={{ duration: 0.7, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
+              transition={{ duration: 0.35, delay: 0.05, ease: [0.25, 0.46, 0.45, 0.94] }}
               className="text-[42px] sm:text-[56px] md:text-[84px] font-black text-white leading-[1.02] tracking-[-0.03em]"
             >
               Des sites web qui
@@ -446,7 +446,7 @@ function Hero() {
             <motion.p
               ref={titleRef}
               initial={{ y: '100%' }} animate={{ y: 0 }}
-              transition={{ duration: 0.7, delay: 0.32, ease: [0.25, 0.46, 0.45, 0.94] }}
+              transition={{ duration: 0.35, delay: 0.12, ease: [0.25, 0.46, 0.45, 0.94] }}
               className="text-[42px] sm:text-[56px] md:text-[84px] font-black leading-[1.02] tracking-[-0.03em] text-transparent bg-clip-text bg-gradient-to-r from-violet-400 via-violet-500 to-fuchsia-500"
             >
               font gagner de l'argent.
@@ -455,8 +455,8 @@ function Hero() {
         </div>
 
         <motion.p
-          initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.5 }}
+          initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, delay: 0.18 }}
           className="text-[17px] text-gray-400 leading-[1.7] max-w-xl mb-10"
         >
           Nova.IO conçoit des sites professionnels pour les restaurants et artisans.
@@ -465,8 +465,8 @@ function Hero() {
         </motion.p>
 
         <motion.div
-          initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.62 }}
+          initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, delay: 0.24 }}
           className="flex flex-col sm:flex-row gap-3 mb-6"
         >
           <MagneticButton href="#contact"
@@ -485,7 +485,7 @@ function Hero() {
         {/* Trust badges */}
         <motion.div
           initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.72 }}
+          transition={{ duration: 0.3, delay: 0.3 }}
           className="flex flex-wrap gap-3 mb-14"
         >
           {[
@@ -508,8 +508,8 @@ function Hero() {
 
         {/* Stats */}
         <motion.div
-          initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.72 }}
+          initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, delay: 0.35 }}
           className="grid grid-cols-2 sm:grid-cols-4 gap-px bg-white/[0.05] rounded-2xl overflow-hidden border border-white/[0.06] max-w-xl"
         >
           {[
