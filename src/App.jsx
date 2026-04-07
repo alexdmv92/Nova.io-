@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from 'react'
+import { useState, useEffect, useRef, useCallback, lazy, Suspense } from 'react'
 import emailjs from '@emailjs/browser'
 import { motion, useInView, useScroll, useTransform, AnimatePresence, useSpring, useMotionValue } from 'framer-motion'
 import { gsap } from 'gsap'
@@ -1502,7 +1502,7 @@ function Footer({ onLegal }) {
         <div className="grid md:grid-cols-4 gap-10 pb-12 border-b border-white/[0.06]">
           <div className="md:col-span-2">
             <div className="flex items-center mb-4">
-              <img src="/logo.png" alt="Nova.io" className="h-8 w-auto object-contain rounded-lg" />
+              <img src="/logo.png" alt="Nova.io" className="h-8 w-auto object-contain rounded-lg" loading="lazy" />
             </div>
             <p className="text-[13px] text-gray-600 leading-relaxed max-w-xs">
               Sites web professionnels pour les restaurants et artisans d&apos;Île-de-France. Livraison en 2 semaines.
