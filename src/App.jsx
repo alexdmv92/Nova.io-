@@ -406,14 +406,9 @@ function Hero() {
       <div className="absolute inset-0 opacity-[0.025]"
         style={{ backgroundImage: 'linear-gradient(white 1px,transparent 1px),linear-gradient(90deg,white 1px,transparent 1px)', backgroundSize: '60px 60px' }} />
 
-      {/* Animated glows */}
-      <motion.div style={{ y }}
-        className="absolute top-[-10%] left-[20%] w-[700px] h-[700px] bg-violet-600/12 rounded-full blur-[180px] pointer-events-none" />
-      <motion.div
-        animate={{ x: [0, 30, 0], y: [0, -20, 0] }}
-        transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
-        className="absolute bottom-[10%] right-[10%] w-[400px] h-[400px] bg-indigo-700/10 rounded-full blur-[140px] pointer-events-none"
-      />
+      {/* Static glows — no animation to avoid Safari GPU overload */}
+      <div className="absolute top-[-10%] left-[20%] w-[500px] h-[500px] bg-violet-600/12 rounded-full blur-[80px] pointer-events-none" style={{ willChange: 'auto' }} />
+      <div className="absolute bottom-[10%] right-[10%] w-[300px] h-[300px] bg-indigo-700/10 rounded-full blur-[60px] pointer-events-none" />
 
       <motion.div style={{ opacity, scale }} className="relative mx-auto max-w-6xl px-6 pt-32 pb-28 w-full">
 
@@ -1026,16 +1021,9 @@ function FAQ() {
 function FinalCTA() {
   return (
     <section className="relative bg-[#080912] py-36 px-6 overflow-hidden">
-      <motion.div
-        animate={{ scale: [1, 1.15, 1], opacity: [0.08, 0.18, 0.08] }}
-        transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
-        className="absolute inset-0 bg-violet-600/15 blur-[220px] rounded-full pointer-events-none"
-      />
-      {/* Floating orbs */}
-      <motion.div animate={{ x: [0, 40, 0], y: [0, -30, 0] }} transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut' }}
-        className="absolute top-10 right-[15%] w-48 h-48 bg-violet-500/10 rounded-full blur-[80px] pointer-events-none" />
-      <motion.div animate={{ x: [0, -30, 0], y: [0, 20, 0] }} transition={{ duration: 11, repeat: Infinity, ease: 'easeInOut' }}
-        className="absolute bottom-10 left-[10%] w-64 h-64 bg-indigo-600/08 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute inset-0 bg-violet-600/10 blur-[80px] rounded-full pointer-events-none" />
+      <div className="absolute top-10 right-[15%] w-40 h-40 bg-violet-500/10 rounded-full blur-[40px] pointer-events-none" />
+      <div className="absolute bottom-10 left-[10%] w-52 h-52 bg-indigo-600/08 rounded-full blur-[50px] pointer-events-none" />
 
       <div className="relative max-w-3xl mx-auto text-center">
         <SplitReveal text="Prêt à avoir un site qui vous ressemble ?"
