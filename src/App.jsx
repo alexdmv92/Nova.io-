@@ -21,8 +21,8 @@ function useScramble(text, trigger) {
         return chars[Math.floor(Math.random() * chars.length)]
       }).join(''))
       if (iteration >= text.length) clearInterval(interval)
-      iteration += 0.5
-    }, 28)
+      iteration += 0.7
+    }, 60)
     return () => clearInterval(interval)
   }, [trigger, text])
   return display
@@ -399,15 +399,6 @@ function Hero() {
 
   const inView = useInView(titleRef, { once: true })
   const scrambled = useScramble('NOVA.IO', inView)
-
-  // GSAP horizontal line reveal on hero text
-  useEffect(() => {
-    if (!titleRef.current) return
-    gsap.fromTo(titleRef.current,
-      { clipPath: 'inset(0 100% 0 0)' },
-      { clipPath: 'inset(0 0% 0 0)', duration: 1.1, delay: 0.4, ease: 'power4.inOut' }
-    )
-  }, [])
 
   return (
     <section ref={ref} className="relative min-h-screen bg-[#080912] flex items-center overflow-hidden">
