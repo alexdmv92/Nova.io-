@@ -34,8 +34,8 @@ function MagneticButton({ children, className, href, strength = 0.35 }) {
   const ref = useRef(null)
   const x = useMotionValue(0)
   const y = useMotionValue(0)
-  const sx = useSpring(x, { stiffness: 200, damping: 18 })
-  const sy = useSpring(y, { stiffness: 200, damping: 18 })
+  const sx = useSpring(x, { stiffness: 600, damping: 30, mass: 0.5 })
+  const sy = useSpring(y, { stiffness: 600, damping: 30, mass: 0.5 })
 
   const onMove = (e) => {
     const rect = ref.current.getBoundingClientRect()
