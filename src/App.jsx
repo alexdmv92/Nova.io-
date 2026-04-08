@@ -235,12 +235,13 @@ const PRICING = [
 ]
 
 const FAQS = [
-  { q: 'Combien coûte un site Nova.IO ?', a: 'Nos offres sont à prix fixe : 450€ pour Nova Vitrine et 700€ pour Nova Menu. Paiement en 2 fois disponible. Aucun frais caché.' },
-  { q: 'En combien de temps mon site est-il en ligne ?', a: 'En moyenne 11 jours. Délai garanti : 2 semaines maximum à partir du brief signé.' },
-  { q: 'Puis-je modifier mon site après la livraison ?', a: 'Oui — menu, horaires, photos. Tout modifiable depuis votre espace. Pour les changements complexes, nous intervenons.' },
-  { q: 'Vous occupez-vous du domaine et de l\'hébergement ?', a: 'Oui, tout est inclus la première année. Domaine, hébergement, SSL, mise en ligne. Rien à gérer techniquement.' },
-  { q: "Je n'ai ni logo ni photos. Est-ce un problème ?", a: 'Aucun problème. Nous créons l\'identité visuelle si besoin et sélectionnons des visuels professionnels. Vous arrivez les mains vides.' },
-  { q: 'Vous travaillez avec tous types de restaurants ?', a: 'Oui — cuisine du monde, pizzerias, sushis, burgers, boulangeries, sur place, livraison, click & collect.' },
+  { q: 'Combien coûte la création d\'un site internet pour un restaurant ou artisan à Paris ?', a: 'Nos offres sont à prix fixe : 450€ pour Nova Vitrine (artisans, TPE, commerçants) et 700€ pour Nova Menu (restaurants). Paiement en 2 fois disponible. Aucun frais caché, aucun abonnement.' },
+  { q: 'En combien de temps mon site web est-il en ligne ?', a: 'En moyenne 11 jours. Délai garanti : 2 semaines maximum à partir du brief signé. C\'est 4 à 8× plus rapide qu\'une agence web classique à Paris.' },
+  { q: 'Puis-je modifier mon site après la livraison ?', a: 'Oui — menu, horaires, photos, textes. Tout est modifiable facilement. Pour les restaurants, la carte se met à jour en direct. Pour les changements complexes, nous intervenons.' },
+  { q: 'Vous occupez-vous du domaine et de l\'hébergement ?', a: 'Oui, tout est inclus la première année. Domaine .fr ou .com, hébergement haute performance, certificat SSL, mise en ligne. Rien à gérer techniquement.' },
+  { q: 'Je n\'ai ni logo ni photos. Est-ce un problème ?', a: 'Aucun problème. Nous créons votre identité visuelle si besoin et sélectionnons des visuels professionnels adaptés à votre activité. Vous arrivez les mains vides, on s\'occupe de tout.' },
+  { q: 'Vous travaillez dans quelles villes en Île-de-France ?', a: 'Nous intervenons dans tout Paris (1er au 20ème arrondissement) et toute l\'Île-de-France : Boulogne-Billancourt, Vincennes, Montreuil, Versailles, Saint-Denis, Neuilly-sur-Seine, Levallois-Perret, Montrouge, Issy-les-Moulineaux et toutes les communes du Grand Paris.' },
+  { q: 'Pourquoi mon restaurant a-t-il besoin d\'un site internet ?', a: '93% des recherches de restaurants commencent sur Google. Sans site, vous êtes invisible. Un site Nova Menu vous permet d\'afficher votre menu, de prendre des commandes directes sans commission Uber Eats (30%) et d\'attirer de nouveaux clients 24h/24.' },
 ]
 
 const PORTFOLIO = [
@@ -623,7 +624,7 @@ function Features() {
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-12">
           <Reveal><p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-violet-600 mb-4">Services</p></Reveal>
-          <SplitReveal text="Tout pour exister en ligne. Rien de superflu."
+          <SplitReveal text="Site web restaurant ou artisan — tout inclus, rien de superflu."
             className="text-[32px] md:text-[42px] font-black text-gray-900 tracking-[-0.02em] leading-[1.1] mb-4" />
         </div>
 
@@ -765,7 +766,7 @@ function Compare() {
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-16">
           <Reveal><p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-violet-400 mb-4">Comparatif</p></Reveal>
-          <SplitReveal text="Pourquoi Nova.IO ?" className="text-[38px] md:text-[48px] font-black text-white tracking-[-0.02em] leading-[1.1]" />
+          <SplitReveal text="Pourquoi Nova.IO plutôt qu'une agence web classique ?" className="text-[38px] md:text-[48px] font-black text-white tracking-[-0.02em] leading-[1.1]" />
         </div>
 
         <Reveal>
@@ -834,7 +835,7 @@ function Testimonials() {
       <div className="max-w-6xl mx-auto px-6">
         <div className="text-center mb-16">
           <Reveal><p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-violet-600 mb-4">Avis clients</p></Reveal>
-          <SplitReveal text="Ils en parlent mieux que nous."
+          <SplitReveal text="Restaurants et artisans parisiens nous font confiance."
             className="text-[38px] md:text-[48px] font-black text-gray-900 tracking-[-0.02em] leading-[1.1]" />
         </div>
       </div>
