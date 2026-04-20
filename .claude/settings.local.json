@@ -2,7 +2,15 @@
   "permissions": {
     "allow": [
       "Bash(npm install:*)",
-      "Bash(npm run *)"
+      "Bash(npm run *)",
+      "Bash(npm audit *)",
+      "mcp__mcp-registry__search_mcp_registry",
+      "Bash(snyk --version)",
+      "Bash(snyk auth *)",
+      "Bash(snyk test *)",
+      "Bash(snyk code *)",
+      "Bash(snyk monitor *)",
+      "Bash(npm uninstall *)"
     ]
   }
 }

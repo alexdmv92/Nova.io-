@@ -1065,10 +1065,13 @@ function FinalCTA() {
 function Contact() {
   const [sent, setSent] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [honeypot, setHoneypot] = useState('')
   const formRef = useRef(null)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    // Honeypot : si ce champ caché est rempli, c'est un bot — on ignore silencieusement
+    if (honeypot) return
     setLoading(true)
     try {
       await emailjs.sendForm(
@@ -1128,26 +1131,33 @@ function Contact() {
                 onSubmit={handleSubmit}
                 className="bg-white rounded-2xl border border-gray-200 p-8 flex flex-col gap-5 shadow-sm"
               >
+                {/* Honeypot anti-bot — invisible pour les humains, rempli par les bots */}
+                <div style={{ position: 'absolute', left: '-9999px', opacity: 0, pointerEvents: 'none' }} aria-hidden="true">
+                  <label htmlFor="website">Ne pas remplir</label>
+                  <input id="website" name="website" type="text" tabIndex={-1} autoComplete="off"
+                    value={honeypot} onChange={e => setHoneypot(e.target.value)} />
+                </div>
+
                 <div className="grid sm:grid-cols-2 gap-5">
                   <div className="flex flex-col gap-1.5">
                     <label className="text-[11px] font-semibold uppercase tracking-wider text-gray-500">Prénom</label>
-                    <input name="from_name" required type="text" placeholder="Jean"
+                    <input name="from_name" required type="text" placeholder="Jean" maxLength={80}
                       className="border border-gray-200 rounded-xl px-4 py-3 text-[13px] focus:outline-none focus:ring-2 focus:ring-violet-500 transition-all" />
                   </div>
                   <div className="flex flex-col gap-1.5">
                     <label className="text-[11px] font-semibold uppercase tracking-wider text-gray-500">Établissement</label>
-                    <input name="establishment" required type="text" placeholder="Mon Restaurant"
+                    <input name="establishment" required type="text" placeholder="Mon Restaurant" maxLength={120}
                       className="border border-gray-200 rounded-xl px-4 py-3 text-[13px] focus:outline-none focus:ring-2 focus:ring-violet-500 transition-all" />
                   </div>
                 </div>
                 <div className="flex flex-col gap-1.5">
                   <label className="text-[11px] font-semibold uppercase tracking-wider text-gray-500">Email</label>
-                  <input name="from_email" required type="email" placeholder="jean@monresto.fr"
+                  <input name="from_email" required type="email" placeholder="jean@monresto.fr" maxLength={254}
                     className="border border-gray-200 rounded-xl px-4 py-3 text-[13px] focus:outline-none focus:ring-2 focus:ring-violet-500 transition-all" />
                 </div>
                 <div className="flex flex-col gap-1.5">
                   <label className="text-[11px] font-semibold uppercase tracking-wider text-gray-500">Téléphone</label>
-                  <input name="phone" type="tel" placeholder="06 00 00 00 00"
+                  <input name="phone" type="tel" placeholder="06 00 00 00 00" maxLength={20}
                     className="border border-gray-200 rounded-xl px-4 py-3 text-[13px] focus:outline-none focus:ring-2 focus:ring-violet-500 transition-all" />
                 </div>
                 <div className="flex flex-col gap-1.5">
@@ -1160,7 +1170,7 @@ function Contact() {
                 </div>
                 <div className="flex flex-col gap-1.5">
                   <label className="text-[11px] font-semibold uppercase tracking-wider text-gray-500">Message</label>
-                  <textarea name="message" rows={3} placeholder="Décrivez votre projet..."
+                  <textarea name="message" rows={3} placeholder="Décrivez votre projet..." maxLength={2000}
                     className="border border-gray-200 rounded-xl px-4 py-3 text-[13px] focus:outline-none focus:ring-2 focus:ring-violet-500 resize-none transition-all" />
                 </div>
                 <MagneticButton href={null}
@@ -1228,7 +1238,24 @@ function ExitPopup() {
   const [show, setShow] = useState(false)
   const [email, setEmail] = useState('')
   const [done, setDone] = useState(false)
+  const [sending, setSending] = useState(false)
   const triggered = useRef(false)
+
+  const handleSend = async () => {
+    if (!email || sending) return
+    setSending(true)
+    try {
+      await emailjs.send(
+        'service_p9cnp08',
+        'template_xcolvf2',
+        { from_email: email, from_name: 'Popup sortie', message: 'Demande d\'estimation depuis le popup de sortie', establishment: '-', project: 'À définir' },
+        'uCuF6ko_sS7czsOPQ'
+      )
+    } catch { /* silencieux */ } finally {
+      setSending(false)
+      setDone(true)
+    }
+  }
 
   useEffect(() => {
     const handler = (e) => {
@@ -1288,10 +1315,11 @@ function ExitPopup() {
                     className="flex-1 border border-gray-200 rounded-xl px-4 py-3 text-[13px] focus:outline-none focus:ring-2 focus:ring-violet-500"
                   />
                   <button
-                    onClick={() => { if (email) setDone(true) }}
-                    className="bg-violet-600 text-white font-semibold text-[13px] px-4 py-3 rounded-xl hover:bg-violet-500 transition-colors"
+                    onClick={handleSend}
+                    disabled={sending}
+                    className="bg-violet-600 text-white font-semibold text-[13px] px-4 py-3 rounded-xl hover:bg-violet-500 transition-colors disabled:opacity-60"
                   >
-                    Envoyer
+                    {sending ? '…' : 'Envoyer'}
                   </button>
                 </div>
                 <p className="text-[11px] text-gray-400 text-center mt-3">Aucun spam. Réponse sous 2h.</p>
