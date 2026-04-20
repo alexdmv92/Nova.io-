@@ -3,8 +3,8 @@
   "configurations": [
     {
       "name": "nova-io",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
+      "runtimeExecutable": "/Users/alexandredemorais/.nvm/versions/node/v22.20.0/bin/node",
+      "runtimeArgs": ["/Users/alexandredemorais/CODE SITE/node_modules/.bin/vite", "--port", "5173"],
       "port": 5173
     }
   ]

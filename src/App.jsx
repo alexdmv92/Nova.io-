@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback, lazy, Suspense } from 'react'
 import emailjs from '@emailjs/browser'
-import { motion, useInView, useScroll, useTransform, AnimatePresence, useSpring, useMotionValue } from 'framer-motion'
+import { motion, useInView, useScroll, useTransform, AnimatePresence, useSpring, useMotionValue, useReducedMotion } from 'framer-motion'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -64,7 +64,7 @@ function MagneticButton({ children, className, href, strength = 0.35 }) {
 
 function Marquee({ items, speed = 35 }) {
   return (
-    <div className="overflow-hidden flex">
+    <div className="overflow-hidden flex" aria-hidden="true">
       {[0, 1].map(n => (
         <motion.div
           key={n}
@@ -292,9 +292,9 @@ const ZONES = [
 
 function Stars() {
   return (
-    <div className="flex gap-0.5">
+    <div className="flex gap-0.5" role="img" aria-label="5 étoiles sur 5">
       {Array.from({ length: 5 }).map((_, i) => (
-        <svg key={i} className="w-3.5 h-3.5 text-amber-400" viewBox="0 0 20 20" fill="currentColor">
+        <svg key={i} className="w-3.5 h-3.5 text-amber-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
           <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
         </svg>
       ))}
@@ -359,8 +359,14 @@ function Navbar() {
           </MagneticButton>
         </div>
 
-        <button onClick={() => setOpen(!open)} className={`md:hidden p-2 ${scrolled ? 'text-gray-700' : 'text-white'}`}>
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <button
+          onClick={() => setOpen(!open)}
+          aria-label={open ? 'Fermer le menu' : 'Ouvrir le menu'}
+          aria-expanded={open}
+          aria-controls="mobile-menu"
+          className={`md:hidden p-2 ${scrolled ? 'text-gray-700' : 'text-white'}`}
+        >
+          <svg className="w-5 h-5" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             {open ? <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               : <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />}
           </svg>
@@ -370,6 +376,7 @@ function Navbar() {
       <AnimatePresence>
         {open && (
           <motion.div
+            id="mobile-menu"
             initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }}
             className="md:hidden bg-white/98 backdrop-blur border-t border-gray-100 px-6 overflow-hidden"
           >
@@ -521,7 +528,7 @@ function Hero() {
               <div className="text-[22px] font-black text-white leading-none">
                 <Counter value={s.v} suffix={s.s} decimals={s.d} />
               </div>
-              <div className="text-[11px] text-gray-600 uppercase tracking-wider mt-1.5">{s.l}</div>
+              <div className="text-[11px] text-gray-400 uppercase tracking-wider mt-1.5">{s.l}</div>
             </motion.div>
           ))}
         </motion.div>
@@ -668,9 +675,12 @@ function Features() {
         </AnimatePresence>
 
         {/* Progress dots */}
-        <div className="flex justify-center gap-2 mt-6">
-          {FEATURES.map((_, i) => (
+        <div className="flex justify-center gap-2 mt-6" role="tablist" aria-label="Services">
+          {FEATURES.map((item, i) => (
             <button key={i} onClick={() => setActive(i)}
+              role="tab"
+              aria-label={item.category}
+              aria-selected={i === active}
               className={`rounded-full transition-all duration-300 ${i === active ? 'w-5 h-2 bg-violet-600' : 'w-2 h-2 bg-gray-300'}`}
             />
           ))}
@@ -863,9 +873,12 @@ function Testimonials() {
       </div>
 
       {/* Dot indicators */}
-      <div className="flex justify-center gap-2 mt-10">
-        {TESTIMONIALS.map((_, i) => (
+      <div className="flex justify-center gap-2 mt-10" role="tablist" aria-label="Témoignages">
+        {TESTIMONIALS.map((t, i) => (
           <button key={i} onClick={() => setIdx(i)}
+            role="tab"
+            aria-label={`Avis de ${t.name}`}
+            aria-selected={i === idx % total}
             className={`rounded-full transition-all duration-300 ${i === idx % total ? 'w-5 h-2 bg-violet-600' : 'w-2 h-2 bg-gray-200'}`}
           />
         ))}
@@ -991,6 +1004,8 @@ function FAQ() {
               viewport={{ once: true }} transition={{ delay: i * 0.06 }}
             >
               <button onClick={() => setOpen(open === i ? null : i)}
+                aria-expanded={open === i}
+                aria-controls={`faq-answer-${i}`}
                 className="w-full flex items-center justify-between py-5 text-left gap-6 group">
                 <span className="text-[14px] font-semibold text-gray-900 group-hover:text-violet-700 transition-colors">{item.q}</span>
                 <motion.svg animate={{ rotate: open === i ? 45 : 0 }} transition={{ duration: 0.22, ease: 'easeInOut' }}
@@ -1001,6 +1016,7 @@ function FAQ() {
               <AnimatePresence>
                 {open === i && (
                   <motion.p
+                    id={`faq-answer-${i}`}
                     initial={{ opacity: 0, height: 0, marginBottom: 0 }}
                     animate={{ opacity: 1, height: 'auto', marginBottom: 20 }}
                     exit={{ opacity: 0, height: 0, marginBottom: 0 }}
@@ -1188,6 +1204,7 @@ function SocialProofToast() {
   }, [])
 
   return (
+    <div aria-live="polite" aria-atomic="true">
     <AnimatePresence>
       {toast && (
         <motion.div
@@ -1203,6 +1220,7 @@ function SocialProofToast() {
         </motion.div>
       )}
     </AnimatePresence>
+    </div>
   )
 }
 
@@ -1232,11 +1250,14 @@ function ExitPopup() {
           onClick={(e) => { if (e.target === e.currentTarget) setShow(false) }}
         >
           <motion.div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="exit-popup-title"
             initial={{ scale: 0.9, opacity: 0, y: 20 }} animate={{ scale: 1, opacity: 1, y: 0 }} exit={{ scale: 0.9, opacity: 0 }}
             transition={{ type: 'spring', stiffness: 300, damping: 25 }}
             className="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl relative"
           >
-            <button onClick={() => setShow(false)} className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors">
+            <button onClick={() => setShow(false)} aria-label="Fermer" className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors">
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
@@ -1255,11 +1276,13 @@ function ExitPopup() {
               <>
                 <div className="text-center mb-6">
                   <p className="text-[28px] mb-2">⚡</p>
-                  <h3 className="text-[22px] font-black text-gray-900 mb-2">Avant de partir…</h3>
+                  <h3 id="exit-popup-title" className="text-[22px] font-black text-gray-900 mb-2">Avant de partir…</h3>
                   <p className="text-[14px] text-gray-500">Recevez une estimation gratuite pour votre site en moins de 2 minutes.</p>
                 </div>
                 <div className="flex gap-2">
+                  <label htmlFor="exit-email" className="sr-only">Votre adresse email</label>
                   <input
+                    id="exit-email"
                     type="email" value={email} onChange={e => setEmail(e.target.value)}
                     placeholder="votre@email.com"
                     className="flex-1 border border-gray-200 rounded-xl px-4 py-3 text-[13px] focus:outline-none focus:ring-2 focus:ring-violet-500"
@@ -1625,6 +1648,9 @@ function LegalModal({ type, onClose }) {
         onClick={onClose}
       >
         <motion.div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="legal-modal-title"
           initial={{ opacity: 0, y: 24, scale: 0.97 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 12 }}
@@ -1642,7 +1668,7 @@ function LegalModal({ type, onClose }) {
             </svg>
           </button>
 
-          <h2 className="text-xl font-black text-gray-900 mb-7">{content.title}</h2>
+          <h2 id="legal-modal-title" className="text-xl font-black text-gray-900 mb-7">{content.title}</h2>
 
           <div className="flex flex-col gap-6">
             {content.sections.map(s => (
@@ -1664,9 +1690,10 @@ function LegalModal({ type, onClose }) {
 
 export default function App() {
   const [legalModal, setLegalModal] = useState(null)
+  const shouldReduce = useReducedMotion()
 
   return (
-    <div className="min-h-screen font-sans antialiased">
+    <div className="min-h-screen font-sans antialiased" data-reduce-motion={shouldReduce ? 'true' : undefined}>
       <Navbar />
       <main>
         <Hero />
